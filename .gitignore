@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# OS / editors
+.DS_Store
+Thumbs.db
+*.swp
+
+# Vercel / node
+.vercel
+node_modules/
+
+# Local scratch
+*.log
+/tmp/
+
+# NOTE: do NOT ignore public/ — the generated site is committed so the repo
+# is deployable even without running the build. build.py regenerates the HTML
+# but never deletes the committed binaries (og.png, favicon.svg, logo.svg,
+# downloads/*.pdf), so those stay tracked.

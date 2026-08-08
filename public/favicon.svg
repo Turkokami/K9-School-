@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="13" fill="#0a1a33"/>
+  <path d="M32 9l17 6v14c0 12-8 19-17 22-9-3-17-10-17-22V15z" fill="none" stroke="#c9a227" stroke-width="3.4" stroke-linejoin="round"/>
+  <text x="32" y="41" font-family="Georgia,serif" font-size="24" font-weight="bold" fill="#c9a227" text-anchor="middle">K9</text>
+</svg>
