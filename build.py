@@ -364,6 +364,128 @@ FIELD_GALLERY = [
     ("lsoc-32-luna-jump-for-toy.jpg", "Reward drive — the paycheck after the find"),
 ]
 
+def photostrip(items, heading="The work, as it happens.", eyebrow="From the field", sub="", wash=False):
+    subp = f'<p class="lead" style="max-width:64ch">{sub}</p>' if sub else ""
+    cls = "sec tight wash" if wash else "sec tight"
+    return (f'<section class="{cls}"><div class="wrap">'
+            f'<div class="eyebrow">{eyebrow}</div><h2>{heading}</h2>{subp}'
+            f'{gallery(items)}</div></section>')
+
+# Per-page photo sets (3–5 each). Neutral, behavior-first captions per the Voice brief.
+AGENCIES_PHOTOS = [
+    ("lsoc-82-patrol-car.jpg", "K9 unit — marked patrol vehicle"),
+    ("lsoc-108-dope-find.jpg", "Narcotics alert at a vehicle"),
+    ("lsoc-21-dexter-and-bus-a.jpg", "Interior search — transit vehicle"),
+    ("lsoc-141-dog-sniffing-lockers-2.jpg", "Facility search — lockers"),
+    ("lsoc-51-two-new-dogs-hit-the-street.jpg", "New teams ready to deploy"),
+]
+TRAINING_PHOTOS = [
+    ("lsoc-14-training-day-a.jpg", "Training day"),
+    ("lsoc-106-dog-sniffing-board.jpg", "Foundation work on the scent board"),
+    ("lsoc-101-lab-straining-at-leash.jpg", "Building drive on the leash"),
+    ("lsoc-99-handler-and-dog-w-toy.jpg", "The reward after the find"),
+    ("lsoc-130-scent-board.jpg", "The Scent Board System"),
+]
+CONSULTING_PHOTOS = [
+    ("lsoc-93-handlers.jpg", "Handler cohort"),
+    ("lsoc-135-class-pic.jpg", "Certification class"),
+    ("lsoc-53-two-53-new-arson-dog-teams.jpg", "New program teams stood up"),
+    ("lsoc-77-training-day-patrol-cars.jpg", "Program training day"),
+    ("lsoc-1-female-hndlrs-at-fed-prison.jpg", "Detection teams at a federal facility"),
+]
+DETECTION_PHOTOS = [
+    ("lsoc-68-bedbug-dog-training.jpg", "Bed bug detection training"),
+    ("lsoc-80-tracking-team-ak-2.jpg", "Tracking team in the field"),
+    ("lsoc-138-dog-sniffing-truck.jpg", "Exterior vehicle search"),
+    ("lsoc-122-dog-reaching-for-source.jpg", "Working to source odor"),
+    ("lsoc-47-josh-and-aki.jpg", "Handler team — Josh & Aki"),
+]
+METHOD_PHOTOS = [
+    ("lsoc-104-lab-freeze-alert.jpg", "Commitment — a trained final response at source"),
+    ("lsoc-105-lab-saeching-for-source.jpg", "The search — before the sit"),
+    ("lsoc-107-dog-sniffing-bd-2.jpg", "Detailing a scent board"),
+    ("lsoc-109-dog-sniffing-bd-3.jpg", "Reading the change of behavior"),
+    ("lsoc-98-bedbug-dog-working-board.jpg", "Working a detection problem"),
+]
+CERT_PHOTOS = [
+    ("lsoc-45-david-and-marley.jpg", "Certified team — David & Marley"),
+    ("lsoc-72-seth-and-vixen.jpg", "Certified team — Seth & Vixen"),
+    ("lsoc-65-yance-and-friend.jpg", "Handler team on test day"),
+    ("lsoc-42-michel-and-bugs.jpg", "Handler team — Michel & Bugs"),
+    ("lsoc-90-summer-and-sonya-win-class.jpg", "Certification day — Summer & Sonya"),
+]
+RESOURCES_PHOTOS = [
+    ("lsoc-123-me-and-2-search-dogs.jpg", "David with working dogs"),
+    ("lsoc-19-luna-eng-comp-a.jpg", "Detection dog at work"),
+    ("lsoc-28-dexter-on-car.jpg", "Vehicle exterior search"),
+    ("lsoc-97-ak-team.jpg", "Detection team, Alaska"),
+]
+CONTACT_PHOTOS = [
+    ("lsoc-12-me-tatsa-georgia-and-midnight.jpg", "David and the dogs"),
+    ("lsoc-55-annie-and-tulip.jpg", "Handler team — Annie & Tulip"),
+    ("lsoc-70-jasmine-and-jeff.jpg", "Handler team — Jasmine & Jeff"),
+]
+HOME_PHOTOS = [
+    ("lsoc-128-bedbug-dog-team-in-br.jpg", "Bed bug detection team on-site"),
+    ("lsoc-23-edge-in-bus.jpg", "Interior search — vehicle"),
+    ("lsoc-31-edge-on-hay.jpg", "Detection dog — field training"),
+    ("lsoc-96-william-and-zeus.jpg", "Handler team — William & Zeus"),
+]
+ABOUT_PHOTOS = [
+    ("lsoc-7-me-na.jpg", "FBI National Academy graduate"),
+    ("lsoc-136-me-and-two-search-dogs-2.jpg", "In the field with the dogs"),
+    ("lsoc-73-me-and-handler-trng.jpg", "Working with a handler"),
+    ("lsoc-100-me-teaching.jpg", "Teaching to the standard"),
+]
+# Resource-article photo sets (3 each), keyed by slug.
+ARTICLE_PHOTOS = {
+    "resources-choosing-a-detection-dog.html": [
+        ("lsoc-3-beagles.jpg", "Candidate dogs come in many breeds"),
+        ("lsoc-5-mal-sitting-and-pointing.jpg", "Evaluating drive and response"),
+        ("lsoc-26-jinx-and-dope.jpg", "A finished narcotics dog"),
+    ],
+    "resources-become-a-k9-handler.html": [
+        ("lsoc-92-training-day-patrol-cars.jpg", "Handler training day"),
+        ("lsoc-96-william-and-zeus.jpg", "A certified handler team"),
+        ("lsoc-13-bedbug-dog-hdlrs-and-dogs.jpg", "Handlers and their dogs"),
+    ],
+    "resources-starting-a-k9-program.html": [
+        ("lsoc-51-two-new-dogs-hit-the-street.jpg", "New teams ready to deploy"),
+        ("lsoc-120-training-day-patrol-cars.jpg", "Program training day"),
+        ("lsoc-97-ak-team.jpg", "A stood-up detection team"),
+    ],
+    "resources-narcotics-detection-k9s.html": [
+        ("lsoc-26-jinx-and-dope.jpg", "Narcotics dog with a find"),
+        ("lsoc-116-dope-find.jpg", "Packaged narcotics located"),
+        ("lsoc-69-dope-and-paraphernalia.jpg", "Narcotics and paraphernalia"),
+    ],
+    "resources-bed-bug-detection-dogs.html": [
+        ("lsoc-113-bedbug-dog-on-dog-food-aisle.jpg", "Bed bug search — retail environment"),
+        ("lsoc-68-bedbug-dog-training.jpg", "Bed bug detection training"),
+        ("lsoc-114-bedbug-dog-and-handler.jpg", "Bed bug inspection in progress"),
+    ],
+    "resources-explosives-detection-k9.html": [
+        ("lsoc-140-dog-sniffing-lockers-independent-work.jpg", "Facility search — high-consequence"),
+        ("lsoc-138-dog-sniffing-truck.jpg", "Exterior vehicle search"),
+        ("lsoc-82-patrol-car.jpg", "Operational K9 unit"),
+    ],
+    "resources-five-phases-detector-dog-behavior.html": [
+        ("lsoc-95-dog-points-to-odor.jpg", "Detection — working the search"),
+        ("lsoc-122-dog-reaching-for-source.jpg", "Commitment — driving to source"),
+        ("lsoc-75-mal-getting-to-source.jpg", "Response — at source"),
+    ],
+    "resources-florida-v-harris-k9-handlers.html": [
+        ("lsoc-60-contraband-find.jpg", "Documented recovery"),
+        ("lsoc-96-william-and-zeus.jpg", "A court-defensible team"),
+        ("lsoc-135-class-pic.jpg", "Certification records matter"),
+    ],
+    "resources-handler-influence-invisible-leash.html": [
+        ("lsoc-103-lab-strains-on-leash.jpg", "Reading leash influence"),
+        ("lsoc-102-lab-alerts.jpg", "Handler and dog as one system"),
+        ("lsoc-73-me-and-handler-trng.jpg", "Training the human end of the leash"),
+    ],
+}
+
 # Reusable callout for David's forthcoming book (purchase link added later)
 def book_callout():
     return f"""
@@ -563,6 +685,8 @@ home_body = f"""
   </div>
 </section>
 
+{photostrip(HOME_PHOTOS, heading="One standard, many missions.", sub="Narcotics, bed bug, arson, tracking and more — the same field-first approach across every discipline.", wash=True)}
+
 <section class="sec">
   <div class="wrap">
     <div class="center"><div class="eyebrow">Common questions</div><h2>Straight answers</h2></div>
@@ -584,8 +708,9 @@ page("index.html", f"{BIZ} — {TAGLINE}",
 # ============================================================
 # Reusable hub builder
 # ============================================================
-def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_html, faq, seo_title, seo_desc, crumb):
+def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_html, faq, seo_title, seo_desc, crumb, photos=None):
     faq_h = faq_html(faq)
+    photos_h = photostrip(photos) if photos else ""
     body = f"""
 <section class="hero">
   <div class="wrap">
@@ -608,6 +733,8 @@ def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_htm
 <section class="sec wash">
   <div class="wrap">{offer_html}</div>
 </section>
+
+{photos_h}
 
 <section class="sec">
   <div class="wrap"><div class="center"><div class="eyebrow">Before you decide</div><h2>The questions you're already asking</h2></div>
@@ -677,7 +804,7 @@ hub("agencies.html","a","For Law Enforcement Agencies",
     "Request a Capability Brief","/agencies.html#brief", ag_proof, ag_offer, ag_faq,
     "Detection Dogs & Handler Certification for Agencies | K9School",
     "Finished detection dogs and certified handlers for law enforcement — narcotics, explosives, firearms and more, documented to the LSOC standard. Request a capability brief.",
-    "Agencies")
+    "Agencies", photos=AGENCIES_PHOTOS)
 
 # ---- TRAINING ----
 tr_offer = f"""
@@ -719,7 +846,7 @@ hub("training.html","g","Handler &amp; Instructor Training",
     "Apply / Enroll","/training.html#apply", tr_proof, tr_offer, tr_faq,
     "Detection Dog Handler & Instructor Certification Courses | K9School",
     "Handler and instructor certification and foundation scent-detection training. Field-first, outcome-driven, and certified to the LSOC standard. Apply or get the syllabus.",
-    "Training")
+    "Training", photos=TRAINING_PHOTOS)
 
 # ---- CONSULTING ----
 co_offer = f"""
@@ -766,7 +893,7 @@ hub("consulting.html","m","Program Consulting",
     "Book a Program Assessment","/consulting.html#book", co_proof, co_offer, co_faq,
     "K9 Detection Program Development, Audits & Consulting | K9School",
     "Detection program development, standards-based audits, K9 selection and testing, and handler/instructor development. Book a program assessment with David Latimer.",
-    "Consulting")
+    "Consulting", photos=CONSULTING_PHOTOS)
 
 # ---- DETECTION DOGS ----
 dd_offer = f"""
@@ -815,7 +942,7 @@ hub("detection-dogs.html","p","Commercial &amp; Operational Detection Dogs",
     "Check Availability","/detection-dogs.html#availability", dd_proof, dd_offer, dd_faq,
     "Detection Dogs for Sale — Bed Bug, Arson, Narcotics, Conservation | K9School",
     "Placement-ready detection dogs for bed bug, arson/accelerant, conservation, narcotics and explosives detection — selected, trained, and paired with handler certification. Check availability.",
-    "Detection Dogs")
+    "Detection Dogs", photos=DETECTION_PHOTOS)
 
 # ============================================================
 # PROOF
@@ -922,6 +1049,8 @@ about_body = f"""
   {book_callout()}
 </div></section>
 
+{photostrip(ABOUT_PHOTOS, heading="A career in the field — and the classroom.", eyebrow="David Latimer", wash=True)}
+
 <section class="sec tight"><div class="wrap"><div class="ctastrip">
   <h2>Let's talk about what you need to deploy.</h2>
   <a class="btn" href="/contact.html">Get in touch</a>
@@ -972,6 +1101,7 @@ cert_body = f"""
 </div></section>
 <section class="sec wash"><div class="wrap"><div class="center"><div class="eyebrow">Questions</div><h2>About the standard</h2></div>
 <div style="max-width:820px;margin:28px auto 0">{faq_html(cert_faq)}</div></div></section>
+{photostrip(CERT_PHOTOS, heading="Teams certified to the standard.")}
 """
 page("certification.html","The LSOC Courtroom-Defensible Standard | K9School",
      "The LSOC courtroom-defensible standard — how Latimer School of Operational K9s documents detection-team reliability for defensible, court-ready records.",
@@ -997,6 +1127,7 @@ contact_body = f"""
   <div class="card" style="margin-top:18px"><h3 class="mt0">Location</h3><p class="muted">{ADDR}</p><p class="muted">Hours: {fill('business hours')}</p><div class="ph" style="min-height:160px;margin-top:12px">Map embed<br>{fill('Google Map embed')}</div></div>
  </div>
 </div></section>
+{photostrip(CONTACT_PHOTOS, heading="The people and dogs behind the work.", wash=True)}
 """
 page("contact.html","Contact — Request a Capability Brief | K9School",
      "Contact Latimer School of Operational K9s. Request a capability brief, apply for training, book a program assessment, or check detection-dog availability.",
@@ -1022,6 +1153,7 @@ def article(slug, kicker, title, desc, intro, sections, cta_head, cta_sub, cta_l
                 body_sections += '<ul class="tick">' + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
             else:
                 body_sections += f"<p>{para}</p>"
+    photos_h = photostrip(ARTICLE_PHOTOS[slug], heading="From the field") if slug in ARTICLE_PHOTOS else ""
     faq_block = ""
     schema_extra = ""
     if faq:
@@ -1038,6 +1170,7 @@ def article(slug, kicker, title, desc, intro, sections, cta_head, cta_sub, cta_l
   {body_sections}
   {faq_block}
 </div></section>
+{photos_h}
 <section class="sec tight"><div class="wrap" style="max-width:900px"><div class="ctastrip">
   <h2>{cta_head}</h2><p>{cta_sub}</p>
   <a class="btn" href="{cta_href}">{cta_label}</a>
@@ -1298,6 +1431,7 @@ res_body = f"""
     <a class="card hover audience m" href="/resources-handler-influence-invisible-leash.html"><div class="ic">🔗</div><h3>The Invisible Leash: Handler Influence</h3><p>How handlers unintentionally shape a dog — and how honest teams test for it.</p><span class="go">Read the method guide →</span></a>
   </div>
 </div></section>
+{photostrip(RESOURCES_PHOTOS, heading="Guidance grounded in real work.", wash=True)}
 <section class="sec tight"><div class="wrap"><div class="ctastrip">
   <h2>Have a question these didn't answer?</h2><p>Ask an operator directly.</p>
   <a class="btn" href="/contact.html">Get in touch</a>
@@ -1404,6 +1538,8 @@ method_body = f"""
   <div class="center"><div class="eyebrow">On integrity</div><h2>The point isn't to win. It's to be right.</h2></div>
   <p class="lead center" style="margin-top:14px">David is a strong advocate for properly trained detector dogs — and an equally strong opponent of using them to &ldquo;beat the system.&rdquo; Honest scrutiny doesn't threaten a competent team; it makes it better. The purpose is to catch offenders, protect the innocent, and present evidence that <i>deserves</i> to be trusted.</p>
 </div></section>
+
+{photostrip(METHOD_PHOTOS, heading="Reading the dog through the response.", eyebrow="Behavior is evidence", wash=True)}
 
 <section class="sec"><div class="wrap"><div class="center"><div class="eyebrow">Questions</div><h2>About the method</h2></div>
 <div style="max-width:820px;margin:28px auto 0">{faq_html(method_faq)}</div></div></section>
