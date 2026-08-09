@@ -91,6 +91,10 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .hero .kick{color:var(--amber);font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:.8rem;margin-bottom:16px}
 .hero-badges{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;color:#9fb4c4;font-size:.86rem;font-weight:600}
 .hero-badges b{color:#fff}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:46px;align-items:center}
+.hero-media img{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 55px rgba(0,0,0,.5);aspect-ratio:4/3;object-fit:cover}
+.hero-media .cap{margin-top:10px;color:#9fb4c4;font-size:.82rem;font-weight:600;text-align:center}
+@media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:26px}}
 
 /* STAT BAND */
 .statband{background:var(--ink2);color:#eef2f5}
@@ -322,9 +326,10 @@ def faq_html(pairs):
 # clearly-marked placeholder helper
 def fill(txt): return f'<span class="fill">[{txt}]</span>'
 
-def img(name, alt, cls="shot", style=""):
+def img(name, alt, cls="shot", style="", eager=False):
     st = f' style="{style}"' if style else ""
-    return f'<img class="{cls}" src="/images/{name}" alt="{html.escape(alt)}" loading="lazy" decoding="async"{st}>'
+    ld = ' loading="eager" fetchpriority="high"' if eager else ' loading="lazy"'
+    return f'<img class="{cls}" src="/images/{name}" alt="{html.escape(alt)}"{ld} decoding="async"{st}>'
 
 def gallery(items):
     figs = "".join(
@@ -388,7 +393,7 @@ TRAINING_PHOTOS = [
 ]
 CONSULTING_PHOTOS = [
     ("lsoc-93-handlers.jpg", "Handler cohort"),
-    ("lsoc-135-class-pic.jpg", "Certification class"),
+    ("lsoc-119-clas-pic.jpg", "Certification class"),
     ("lsoc-53-two-53-new-arson-dog-teams.jpg", "New program teams stood up"),
     ("lsoc-77-training-day-patrol-cars.jpg", "Program training day"),
     ("lsoc-1-female-hndlrs-at-fed-prison.jpg", "Detection teams at a federal facility"),
@@ -622,17 +627,25 @@ SELECTOR = r'''
 home_body = f"""
 <section class="hero">
   <div class="wrap">
-    <div class="kick">Operational Detection K9s &middot; Since {fill('year')}</div>
-    <h1>Proven in the Field. <span class="amb">Not Just the Yard.</span></h1>
-    <p class="sub">Detection dogs and handlers built to hold up where it counts — reliable under pressure, defensible in court, ready for real deployment. Trusted by agencies and working teams nationwide.</p>
-    <div class="btnrow">
-      <a class="btn" href="/contact.html">Request a Capability Brief</a>
-      <a class="btn ghost" href="/training.html">Explore Training</a>
-    </div>
-    <div class="hero-badges">
-      <span><b>LSOC</b> Courtroom-Defensible Standard</span>
-      <span><b>Train &middot; Certify &middot; Consult &middot; Place</b></span>
-      <span><b>{ADDR}</b></span>
+    <div class="hero-grid">
+     <div class="hero-copy">
+      <div class="kick">Operational Detection K9s &middot; Since {fill('year')}</div>
+      <h1>Proven in the Field. <span class="amb">Not Just the Yard.</span></h1>
+      <p class="sub">Detection dogs and handlers built to hold up where it counts — reliable under pressure, defensible in court, ready for real deployment. Trusted by agencies and working teams nationwide.</p>
+      <div class="btnrow">
+        <a class="btn" href="/contact.html">Request a Capability Brief</a>
+        <a class="btn ghost" href="/training.html">Explore Training</a>
+      </div>
+      <div class="hero-badges">
+        <span><b>LSOC</b> Courtroom-Defensible Standard</span>
+        <span><b>Train &middot; Certify &middot; Consult &middot; Place</b></span>
+        <span><b>{ADDR}</b></span>
+      </div>
+     </div>
+     <div class="hero-media">
+      {img('lsoc-135-class-pic.jpg', 'A full class of K9 officers and their certified detection dogs with patrol vehicles', cls='', eager=True)}
+      <div class="cap">Certified K9 teams — officers, handlers, and dogs trained to the LSOC standard.</div>
+     </div>
     </div>
   </div>
 </section>
