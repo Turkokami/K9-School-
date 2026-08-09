@@ -92,7 +92,7 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .hero-badges{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;color:#9fb4c4;font-size:.86rem;font-weight:600}
 .hero-badges b{color:#fff}
 .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:46px;align-items:center}
-.hero-media img{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 55px rgba(0,0,0,.5);aspect-ratio:4/3;object-fit:cover}
+.hero-media img{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 55px rgba(0,0,0,.5);aspect-ratio:4/3;object-fit:cover;object-position:center 28%}
 .hero-media .cap{margin-top:10px;color:#9fb4c4;font-size:.82rem;font-weight:600;text-align:center}
 @media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:26px}}
 
@@ -138,6 +138,15 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .gallery figure img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .35s ease}
 .gallery figure:hover img{transform:scale(1.05)}
 .gallery figcaption{padding:10px 13px;font-size:.82rem;color:var(--steel);font-weight:600;background:var(--paper)}
+
+/* INLINE CONTENT FIGURES */
+.fig{margin:34px auto;max-width:720px}
+.fig img,.fig-2 img{border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow);width:100%}
+.fig figcaption,.fig-2 figcaption{margin-top:8px;font-size:.82rem;color:var(--mute);font-weight:600;text-align:center}
+.fig-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34px auto;max-width:920px}
+.fig-2 figure{margin:0}
+.fig-2 img{aspect-ratio:4/3;object-fit:cover}
+@media(max-width:680px){.fig-2{grid-template-columns:1fr}}
 
 /* LIST */
 .tick{list-style:none;margin:14px 0}
@@ -375,6 +384,40 @@ def photostrip(items, heading="The work, as it happens.", eyebrow="From the fiel
     return (f'<section class="{cls}"><div class="wrap">'
             f'<div class="eyebrow">{eyebrow}</div><h2>{heading}</h2>{subp}'
             f'{gallery(items)}</div></section>')
+
+def hero_media(item, eager=True):
+    fn, cap = item
+    caph = f'<div class="cap">{html.escape(cap)}</div>' if cap else ""
+    return f'<div class="hero-media">{img(fn, cap, cls="", eager=eager)}{caph}</div>'
+
+def hero_grid(inner_copy, hero_item):
+    """Wrap existing hero copy + a hero image into the two-column grid."""
+    if not hero_item:
+        return inner_copy
+    return f'<div class="hero-grid"><div class="hero-copy">{inner_copy}</div>{hero_media(hero_item)}</div>'
+
+def figure(item):
+    fn, cap = item
+    return f'<figure class="fig">{img(fn, cap)}<figcaption>{html.escape(cap)}</figcaption></figure>'
+
+def figure2(a, b):
+    return (f'<div class="fig-2">'
+            f'<figure>{img(a[0], a[1])}<figcaption>{html.escape(a[1])}</figcaption></figure>'
+            f'<figure>{img(b[0], b[1])}<figcaption>{html.escape(b[1])}</figcaption></figure></div>')
+
+# Landscape hero image per page (portrait phone photos crop badly in a wide hero).
+HERO_PHOTOS = {
+    "agencies.html": ("lsoc-82-patrol-car.jpg", "A K9 unit ready for patrol"),
+    "training.html": ("lsoc-14-training-day-a.jpg", "Training day in the field"),
+    "consulting.html": ("lsoc-119-clas-pic.jpg", "A full class of handler teams"),
+    "detection-dogs.html": ("lsoc-125-dog-and-toy.jpg", "A detection dog in drive"),
+    "method.html": ("lsoc-95-dog-points-to-odor.jpg", "Working a structure to source"),
+    "proof.html": ("lsoc-67-jinx-and-money.jpg", "Currency detection — Jinx on a seizure"),
+    "about.html": ("lsoc-12-me-tatsa-georgia-and-midnight.jpg", "David Latimer with his dogs"),
+    "certification.html": ("lsoc-97-ak-team.jpg", "A certified detection team"),
+    "contact.html": ("lsoc-120-training-day-patrol-cars.jpg", "Teams on a training day"),
+    "resources.html": ("lsoc-77-training-day-patrol-cars.jpg", "Field training with working teams"),
+}
 
 # Per-page photo sets (3–5 each). Neutral, behavior-first captions per the Voice brief.
 AGENCIES_PHOTOS = [
@@ -723,16 +766,19 @@ page("index.html", f"{BIZ} — {TAGLINE}",
 # ============================================================
 def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_html, faq, seo_title, seo_desc, crumb, photos=None):
     faq_h = faq_html(faq)
-    photos_h = photostrip(photos) if photos else ""
+    photos = photos or []
+    hero_item = HERO_PHOTOS.get(slug)
+    fig_a = figure(photos[0]) if len(photos) >= 1 else ""
+    fig_b = figure2(photos[1], photos[2]) if len(photos) >= 3 else ""
+    fig_c = figure(photos[3]) if len(photos) >= 4 else ""
+    fig_c_sec = f'<section class="sec tight"><div class="wrap">{fig_c}</div></section>' if fig_c else ""
+    hero_copy = (f'<div class="crumb"><a href="/index.html">Home</a> / {crumb}</div>'
+                 f'<div class="kick">{eyebrow}</div><h1>{h1}</h1><p class="sub">{sub}</p>'
+                 f'<div class="btnrow"><a class="btn" href="{cta_href}">{cta_label}</a>'
+                 f'<a class="btn ghost" href="tel:{PHONE_TEL}">Call David: {PHONE}</a></div>')
     body = f"""
 <section class="hero">
-  <div class="wrap">
-    <div class="crumb"><a href="/index.html">Home</a> / {crumb}</div>
-    <div class="kick">{eyebrow}</div>
-    <h1>{h1}</h1>
-    <p class="sub">{sub}</p>
-    <div class="btnrow"><a class="btn" href="{cta_href}">{cta_label}</a><a class="btn ghost" href="tel:{PHONE_TEL}">Call David: {PHONE}</a></div>
-  </div>
+  <div class="wrap">{hero_grid(hero_copy, hero_item)}</div>
 </section>
 
 <section class="sec">
@@ -740,19 +786,22 @@ def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_htm
     <div class="eyebrow">Proof that matters to you</div>
     <h2>Built to remove your risk.</h2>
     <div class="grid g3" style="margin-top:28px">{proof_items}</div>
+    {fig_a}
   </div>
 </section>
 
 <section class="sec wash">
-  <div class="wrap">{offer_html}</div>
+  <div class="wrap">{offer_html}
+    {fig_b}
+  </div>
 </section>
-
-{photos_h}
 
 <section class="sec">
   <div class="wrap"><div class="center"><div class="eyebrow">Before you decide</div><h2>The questions you're already asking</h2></div>
   <div style="max-width:820px;margin:30px auto 0">{faq_h}</div></div>
 </section>
+
+{fig_c_sec}
 
 <section class="sec tight"><div class="wrap"><div class="ctastrip">
   <h2>{h1_cta(h1)}</h2>
@@ -961,12 +1010,12 @@ hub("detection-dogs.html","p","Commercial &amp; Operational Detection Dogs",
 # PROOF
 # ============================================================
 proof_body = f"""
-<section class="hero"><div class="wrap">
-  <div class="crumb"><a href="/index.html">Home</a> / Proof</div>
-  <div class="kick">Proof &amp; Results</div>
-  <h1>Evidence, not adjectives.</h1>
-  <p class="sub">The detection world runs on trust earned in deployment. Here's ours — case studies, references, and certification you can verify.</p>
-</div></section>
+<section class="hero"><div class="wrap">{hero_grid(
+  '<div class="crumb"><a href="/index.html">Home</a> / Proof</div>'
+  '<div class="kick">Proof &amp; Results</div>'
+  '<h1>Evidence, not adjectives.</h1>'
+  "<p class=\"sub\">The detection world runs on trust earned in deployment. Here's ours — case studies, references, and certification you can verify.</p>",
+  HERO_PHOTOS['proof.html'])}</div></section>
 
 <section class="sec"><div class="wrap">
   <div class="eyebrow">Case studies</div>
@@ -1017,13 +1066,12 @@ page("proof.html","Proof & Results — Case Studies & References | K9School",
 # ============================================================
 # ABOUT
 # ============================================================
-about_body = f"""
-<section class="hero"><div class="wrap">
-  <div class="crumb"><a href="/index.html">Home</a> / About</div>
+about_hero = f'''<div class="crumb"><a href="/index.html">Home</a> / About</div>
   <div class="kick">About</div>
   <h1>Operator. Trainer. Expert witness.</h1>
-  <p class="sub">K9School is the working home of {BIZ} — David Latimer's operational detection practice in Lincoln, Alabama, built on a career spent in the field and in the courtroom.</p>
-</div></section>
+  <p class="sub">K9School is the working home of {BIZ} — David Latimer's operational detection practice in Lincoln, Alabama, built on a career spent in the field and in the courtroom.</p>'''
+about_body = f"""
+<section class="hero"><div class="wrap">{hero_grid(about_hero, HERO_PHOTOS['about.html'])}</div></section>
 
 <section class="sec"><div class="wrap split">
  <div>
@@ -1044,6 +1092,8 @@ about_body = f"""
    <p class="muted" style="font-size:.82rem;margin-top:10px;text-align:center">David Latimer — training the human end of the leash.</p></div>
 </div></section>
 
+<section class="sec tight"><div class="wrap">{figure2(("lsoc-136-me-and-two-search-dogs-2.jpg","In the field with the dogs"), ("lsoc-73-me-and-handler-trng.jpg","Working alongside a handler"))}</div></section>
+
 <section class="sec wash"><div class="wrap split">
   <div>
     <div class="eyebrow">The dog behind the name</div>
@@ -1059,10 +1109,9 @@ about_body = f"""
 <section class="sec"><div class="wrap">
   <div class="center"><div class="eyebrow">One operation, several roots</div><h2>K9School, Latimer School of Operational K9s, and Kip K9</h2></div>
   <p class="lead center" style="max-width:72ch;margin:16px auto 24px">K9School.net is now the single home for the work formerly carried under <b>Kip K9</b> and the <b>Latimer School of Operational K9s (LSOC)</b>. Same operator, same standard, one place to find it — with the legacy detection specialties (narcotics, arson, termite, bed bug, allergen) organized under our detection-dog service lines.</p>
+  {figure(("lsoc-100-me-teaching.jpg","Teaching handlers to the standard"))}
   {book_callout()}
 </div></section>
-
-{photostrip(ABOUT_PHOTOS, heading="A career in the field — and the classroom.", eyebrow="David Latimer", wash=True)}
 
 <section class="sec tight"><div class="wrap"><div class="ctastrip">
   <h2>Let's talk about what you need to deploy.</h2>
@@ -1090,13 +1139,12 @@ cert_faq = [
  ("Can we certify a team we didn't buy from you?",
   f"{fill('Confirm whether you evaluate/certify externally sourced teams.')}"),
 ]
+cert_hero = ('<div class="crumb"><a href="/index.html">Home</a> / Certification</div>'
+  '<div class="kick">The Standard</div>'
+  '<h1>Reliability you can document.</h1>'
+  '<p class="sub">Every dog and handler we build is evaluated against the LSOC courtroom-defensible standard — so your records hold up where it counts.</p>')
 cert_body = f"""
-<section class="hero"><div class="wrap">
-  <div class="crumb"><a href="/index.html">Home</a> / Certification</div>
-  <div class="kick">The Standard</div>
-  <h1>Reliability you can document.</h1>
-  <p class="sub">Every dog and handler we build is evaluated against the LSOC courtroom-defensible standard — so your records hold up where it counts.</p>
-</div></section>
+<section class="hero"><div class="wrap">{hero_grid(cert_hero, HERO_PHOTOS['certification.html'])}</div></section>
 <section class="sec"><div class="wrap split">
  <div>
   <div class="eyebrow">What it covers</div>
@@ -1112,9 +1160,10 @@ cert_body = f"""
  </div>
  <div class="card"><h3 class="mt0">Why it wins deals</h3><p class="muted">Agencies and courts don't reward the best adjectives — they reward the best evidence. A documented standard is that evidence.</p><a class="btn dark sm" href="/contact.html">Certify with us</a></div>
 </div></section>
+<section class="sec tight"><div class="wrap"><div class="eyebrow center">Teams certified to the standard</div>{figure2(CERT_PHOTOS[0], CERT_PHOTOS[1])}</div></section>
 <section class="sec wash"><div class="wrap"><div class="center"><div class="eyebrow">Questions</div><h2>About the standard</h2></div>
+{figure(CERT_PHOTOS[2])}
 <div style="max-width:820px;margin:28px auto 0">{faq_html(cert_faq)}</div></div></section>
-{photostrip(CERT_PHOTOS, heading="Teams certified to the standard.")}
 """
 page("certification.html","The LSOC Courtroom-Defensible Standard | K9School",
      "The LSOC courtroom-defensible standard — how Latimer School of Operational K9s documents detection-team reliability for defensible, court-ready records.",
@@ -1123,13 +1172,12 @@ page("certification.html","The LSOC Courtroom-Defensible Standard | K9School",
 # ============================================================
 # CONTACT
 # ============================================================
+contact_hero = ('<div class="crumb"><a href="/index.html">Home</a> / Contact</div>'
+  '<div class="kick">Contact</div>'
+  '<h1>Tell us what you need to deploy.</h1>'
+  '<p class="sub">Pick your path below. Agencies and consulting inquiries reach David directly; training and placement inquiries route to the right next step.</p>')
 contact_body = f"""
-<section class="hero"><div class="wrap">
-  <div class="crumb"><a href="/index.html">Home</a> / Contact</div>
-  <div class="kick">Contact</div>
-  <h1>Tell us what you need to deploy.</h1>
-  <p class="sub">Pick your path below. Agencies and consulting inquiries reach David directly; training and placement inquiries route to the right next step.</p>
-</div></section>
+<section class="hero"><div class="wrap">{hero_grid(contact_hero, HERO_PHOTOS['contact.html'])}</div></section>
 <section class="sec"><div class="wrap split">
  <div class="form">
   <h3 class="mt0">Start the conversation</h3>
@@ -1140,7 +1188,7 @@ contact_body = f"""
   <div class="card" style="margin-top:18px"><h3 class="mt0">Location</h3><p class="muted">{ADDR}</p><p class="muted">Hours: {fill('business hours')}</p><div class="ph" style="min-height:160px;margin-top:12px">Map embed<br>{fill('Google Map embed')}</div></div>
  </div>
 </div></section>
-{photostrip(CONTACT_PHOTOS, heading="The people and dogs behind the work.", wash=True)}
+<section class="sec tight wash"><div class="wrap"><div class="eyebrow center">The people and dogs behind the work</div>{figure2(CONTACT_PHOTOS[0], CONTACT_PHOTOS[1])}</div></section>
 """
 page("contact.html","Contact — Request a Capability Brief | K9School",
      "Contact Latimer School of Operational K9s. Request a capability brief, apply for training, book a program assessment, or check detection-dog availability.",
@@ -1157,33 +1205,40 @@ def article_schema(title, desc, slug):
       f'"mainEntityOfPage":"{SITE}/{slug}"}}')
 
 def article(slug, kicker, title, desc, intro, sections, cta_head, cta_sub, cta_label, cta_href, faq=None):
+    extra = ARTICLE_PHOTOS.get(slug, [])
+    hero_item = extra[0] if extra else None
+    inline = extra[1:]
+    n = len(sections)
+    seam = {}
+    for k, ph in enumerate(inline):
+        idx = min(n - 1, round((k + 1) * n / (len(inline) + 1)) - 1)
+        seam.setdefault(idx, []).append(ph)
     body_sections = ""
-    for h, paras in sections:
+    for i, (h, paras) in enumerate(sections):
         body_sections += f"<h2>{h}</h2>"
         for para in paras:
             if para.startswith("UL:"):
                 items = para[3:].split("|")
-                body_sections += '<ul class="tick">' + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+                body_sections += '<ul class="tick">' + "".join(f"<li>{i2}</li>" for i2 in items) + "</ul>"
             else:
                 body_sections += f"<p>{para}</p>"
-    photos_h = photostrip(ARTICLE_PHOTOS[slug], heading="From the field") if slug in ARTICLE_PHOTOS else ""
+        for ph in seam.get(i, []):
+            body_sections += figure(ph)
     faq_block = ""
     schema_extra = ""
     if faq:
         faq_block = f'<h2>Frequently asked</h2><div class="faq">{"".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in faq)}</div>'
         schema_extra = "," + faq_schema(faq)
+    hero_copy = (f'<div class="crumb"><a href="/index.html">Home</a> / <a href="/resources.html">Resources</a> / Guide</div>'
+                 f'<div class="kick">{kicker}</div><h1>{title}</h1><p class="sub">{intro}</p>')
     body = f"""
-<section class="hero"><div class="wrap" style="max-width:820px">
-  <div class="crumb"><a href="/index.html">Home</a> / <a href="/resources.html">Resources</a> / Guide</div>
-  <div class="kick">{kicker}</div>
-  <h1>{title}</h1>
-  <p class="sub">{intro}</p>
+<section class="hero"><div class="wrap">
+  {hero_grid(hero_copy, hero_item)}
 </div></section>
 <section class="sec"><div class="wrap" style="max-width:780px">
   {body_sections}
   {faq_block}
 </div></section>
-{photos_h}
 <section class="sec tight"><div class="wrap" style="max-width:900px"><div class="ctastrip">
   <h2>{cta_head}</h2><p>{cta_sub}</p>
   <a class="btn" href="{cta_href}">{cta_label}</a>
@@ -1424,13 +1479,12 @@ article("resources-handler-influence-invisible-leash.html",
   )
 
 # --- Resources index ---
+res_hero = ('<div class="crumb"><a href="/index.html">Home</a> / Resources</div>'
+  '<div class="kick">Resources</div>'
+  '<h1>Field-tested guidance, free to read.</h1>'
+  '<p class="sub">Straight, practical guides on selecting dogs, becoming a handler, and building programs — written from operational experience, not marketing.</p>')
 res_body = f"""
-<section class="hero"><div class="wrap">
-  <div class="crumb"><a href="/index.html">Home</a> / Resources</div>
-  <div class="kick">Resources</div>
-  <h1>Field-tested guidance, free to read.</h1>
-  <p class="sub">Straight, practical guides on selecting dogs, becoming a handler, and building programs — written from operational experience, not marketing.</p>
-</div></section>
+<section class="hero"><div class="wrap">{hero_grid(res_hero, HERO_PHOTOS['resources.html'])}</div></section>
 <section class="sec"><div class="wrap">
   <div class="grid g3">
     <a class="card hover audience p" href="/resources-choosing-a-detection-dog.html"><div class="ic">🐕</div><h3>How to Choose a Detection Dog</h3><p>The traits, tests, and questions that separate a working dog from an expensive mistake.</p><span class="go">Read the buyer's guide →</span></a>
@@ -1444,7 +1498,7 @@ res_body = f"""
     <a class="card hover audience m" href="/resources-handler-influence-invisible-leash.html"><div class="ic">🔗</div><h3>The Invisible Leash: Handler Influence</h3><p>How handlers unintentionally shape a dog — and how honest teams test for it.</p><span class="go">Read the method guide →</span></a>
   </div>
 </div></section>
-{photostrip(RESOURCES_PHOTOS, heading="Guidance grounded in real work.", wash=True)}
+<section class="sec tight wash"><div class="wrap"><div class="eyebrow center">Guidance grounded in real work</div>{figure2(RESOURCES_PHOTOS[0], RESOURCES_PHOTOS[1])}</div></section>
 <section class="sec tight"><div class="wrap"><div class="ctastrip">
   <h2>Have a question these didn't answer?</h2><p>Ask an operator directly.</p>
   <a class="btn" href="/contact.html">Get in touch</a>
@@ -1465,13 +1519,12 @@ method_faq = [
  ("Is this approach only for law enforcement?",
   "No. The same principles — reading behavior, building independent dogs, honest evaluation, documentation — make any detection dog more reliable, whether it's working narcotics, bed bugs, arson, or conservation."),
 ]
+method_hero = ('<div class="crumb"><a href="/index.html">Home</a> / The Method</div>'
+  '<div class="kick">The LSOC Approach</div>'
+  '<h1>Behavior Is <span class="amb">Evidence.</span></h1>'
+  '<p class="sub">Most of the profession trains the sit, rewards the sit, and testifies about the sit. We train something more important: the search that happens before it — because that is where the dog does its real work.</p>')
 method_body = f"""
-<section class="hero"><div class="wrap" style="max-width:880px">
-  <div class="crumb"><a href="/index.html">Home</a> / The Method</div>
-  <div class="kick">The LSOC Approach</div>
-  <h1>Behavior Is <span class="amb">Evidence.</span></h1>
-  <p class="sub">Most of the profession trains the sit, rewards the sit, and testifies about the sit. We train something more important: the search that happens before it — because that is where the dog does its real work.</p>
-</div></section>
+<section class="hero"><div class="wrap">{hero_grid(method_hero, HERO_PHOTOS['method.html'])}</div></section>
 
 <section class="sec"><div class="wrap" style="max-width:820px">
   <div class="quote" style="font-size:1.35rem">"The sit was not the discovery. It was the communication."</div>
@@ -1490,6 +1543,7 @@ method_body = f"""
     <div class="card"><div class="ic">5</div><h3>Trained final response</h3><p>The dog reports its conclusion — the sit is phase five, not the whole story.</p></div>
     <div class="card" style="background:var(--navy);color:#fff;border-color:var(--navy)"><h3 style="color:#fff">Why it matters</h3><p style="color:#c4d2dd">Phases 3 and 4 are the investigation. A handler who can describe them can explain — and defend — exactly what the dog did.</p></div>
   </div>
+  {figure2(("lsoc-105-lab-saeching-for-source.jpg","The systematic search — before the sit"), ("lsoc-104-lab-freeze-alert.jpg","Phase five — the trained final response"))}
 </div></section>
 
 <section class="sec"><div class="wrap split">
@@ -1517,7 +1571,9 @@ method_body = f"""
     </ul>
     <div class="quote">"Every search is a conversation. The dog is talking. The question is whether the handler understands the language."</div>
   </div>
-</div></section>
+</div>
+<div class="wrap">{figure(("lsoc-107-dog-sniffing-bd-2.jpg","Reading the change of behavior on the scent board"))}</div>
+</section>
 
 <section class="sec wash"><div class="wrap">
   <div class="center"><div class="eyebrow">What we build toward</div><h2>Independent dogs, honest answers</h2></div>
@@ -1552,7 +1608,7 @@ method_body = f"""
   <p class="lead center" style="margin-top:14px">David is a strong advocate for properly trained detector dogs — and an equally strong opponent of using them to &ldquo;beat the system.&rdquo; Honest scrutiny doesn't threaten a competent team; it makes it better. The purpose is to catch offenders, protect the innocent, and present evidence that <i>deserves</i> to be trusted.</p>
 </div></section>
 
-{photostrip(METHOD_PHOTOS, heading="Reading the dog through the response.", eyebrow="Behavior is evidence", wash=True)}
+<section class="sec tight"><div class="wrap"><div class="eyebrow center">The Scent Board System</div>{figure2(("lsoc-109-dog-sniffing-bd-3.jpg","Discrimination and source commitment on the board"), ("lsoc-98-bedbug-dog-working-board.jpg","Working a detection problem"))}</div></section>
 
 <section class="sec"><div class="wrap"><div class="center"><div class="eyebrow">Questions</div><h2>About the method</h2></div>
 <div style="max-width:820px;margin:28px auto 0">{faq_html(method_faq)}</div></div></section>
