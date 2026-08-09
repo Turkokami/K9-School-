@@ -126,6 +126,15 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .ph{background:repeating-linear-gradient(45deg,#f0f3f6,#f0f3f6 12px,#eaeef2 12px,#eaeef2 24px);border:1px dashed #c3ccd4;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#8494a1;font-size:.82rem;font-weight:700;text-align:center;padding:22px;min-height:150px}
 .fill{background:#fff6e6;border:1px solid #e6cf9f;color:#8a6417;padding:2px 7px;border-radius:5px;font-size:.86em;font-weight:700}
 
+/* PHOTOS / GALLERY */
+.shot{width:100%;border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow)}
+.shot.tall{aspect-ratio:4/5;object-fit:cover}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:8px}
+.gallery figure{margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--ink);box-shadow:var(--shadow)}
+.gallery figure img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .35s ease}
+.gallery figure:hover img{transform:scale(1.05)}
+.gallery figcaption{padding:10px 13px;font-size:.82rem;color:var(--steel);font-weight:600;background:var(--paper)}
+
 /* LIST */
 .tick{list-style:none;margin:14px 0}
 .tick li{position:relative;padding-left:30px;margin-bottom:10px;color:var(--steel)}
@@ -312,6 +321,48 @@ def faq_html(pairs):
 
 # clearly-marked placeholder helper
 def fill(txt): return f'<span class="fill">[{txt}]</span>'
+
+def img(name, alt, cls="shot", style=""):
+    st = f' style="{style}"' if style else ""
+    return f'<img class="{cls}" src="/images/{name}" alt="{html.escape(alt)}" loading="lazy" decoding="async"{st}>'
+
+def gallery(items):
+    figs = "".join(
+        f'<figure><img src="/images/{fn}" alt="{html.escape(cap)}" loading="lazy" decoding="async">'
+        f'<figcaption>{html.escape(cap)}</figcaption></figure>'
+        for fn, cap in items
+    )
+    return f'<div class="gallery">{figs}</div>'
+
+# Curated field photos for the Proof gallery. Neutral, behavior-first captions —
+# no outcome/accuracy claims (see Voice & Ideology Brief). Source images live in
+# public/images/ (optimized from David's LSOC library).
+FIELD_GALLERY = [
+    ("lsoc-95-dog-points-to-odor.jpg", "Working a structure to source odor"),
+    ("lsoc-74-freeze-alert.jpg", "Trained final response at source"),
+    ("lsoc-5-mal-sitting-and-pointing.jpg", "Sit-and-stare response on a training problem"),
+    ("lsoc-94-dog-uses-structure-to-get-to-source.jpg", "Using structure to reach source odor"),
+    ("lsoc-75-mal-getting-to-source.jpg", "Detailing a vehicle to source"),
+    ("lsoc-78-mal-sniffing-car.jpg", "Vehicle exterior search"),
+    ("lsoc-8-dope-find.jpg", "Narcotics detection — vehicle search"),
+    ("lsoc-60-contraband-find.jpg", "Contraband detection work"),
+    ("lsoc-84-equipment-and-dope.jpg", "Narcotics and paraphernalia — detection work"),
+    ("lsoc-121-dope-find-w-team.jpg", "Handler and dog after a find"),
+    ("lsoc-67-jinx-and-money.jpg", "Currency detection — Jinx"),
+    ("lsoc-46-chappy-and-deke.jpg", "Handler team — Chappy & Deke"),
+    ("lsoc-88-cason-and-argo.jpg", "Handler team — Cason & Argo"),
+    ("lsoc-96-william-and-zeus.jpg", "Handler team — William & Zeus"),
+    ("lsoc-90-summer-and-sonya-win-class.jpg", "Certification day — Summer & Sonya"),
+    ("lsoc-127-bedbug-team.jpg", "Bed bug detection team on-site"),
+    ("lsoc-114-bedbug-dog-and-handler.jpg", "Bed bug inspection in progress"),
+    ("lsoc-52-arson-dog-team.jpg", "Accelerant (arson) detection team"),
+    ("lsoc-142-tracking-team-ak.jpg", "Tracking team in the field"),
+    ("lsoc-54-tracking-dog-class.jpg", "Tracking class in training"),
+    ("lsoc-111-rat-dog.jpg", "Rodent detection dog at work"),
+    ("lsoc-112-me-laying-track-in-ak.jpg", "Laying a training track"),
+    ("lsoc-119-clas-pic.jpg", "Handler certification class"),
+    ("lsoc-32-luna-jump-for-toy.jpg", "Reward drive — the paycheck after the find"),
+]
 
 # Reusable callout for David's forthcoming book (purchase link added later)
 def book_callout():
@@ -504,7 +555,7 @@ home_body = f"""
       <a class="btn dark" href="/about.html">Meet David Latimer</a>
     </div>
     <div>
-      <div class="ph" style="min-height:210px">Founder / operational field photo or video<br>{fill('add hero image or embedded video')}</div>
+      {img('lsoc-125-dog-and-toy.jpg', 'Detection dog driving to a training reward — reading the dog through the response')}
       <div class="card" style="margin-top:18px">
         <div class="quote">{fill('Short, specific agency testimonial — the result the dog/handler delivered in the field.')}<cite>— {fill('Name, Title, Agency')}</cite></div>
       </div>
@@ -787,6 +838,14 @@ proof_body = f"""
   </div>
 </div></section>
 
+<section class="sec tight"><div class="wrap">
+  <div class="eyebrow">From the field</div>
+  <h2>The work, as it happens.</h2>
+  <p class="lead" style="max-width:64ch">Detection is behavior you can read — the search before the sit. These are our teams working real problems: alerts, finds, and handlers built to hold up where it counts.</p>
+  {gallery(FIELD_GALLERY)}
+  <p class="muted" style="font-size:.82rem;margin-top:16px">Photos from LSOC training and deployments.</p>
+</div></section>
+
 <section class="sec wash"><div class="wrap">
   <div class="eyebrow">In their words</div>
   <h2>References who run our teams.</h2>
@@ -841,7 +900,8 @@ about_body = f"""
   </ul>
   <a class="btn dark" href="/method.html">See the method he teaches</a>
  </div>
- <div class="ph" style="min-height:320px">Portrait / working photo of David Latimer<br>{fill('add photo')}</div>
+ <div>{img('lsoc-110-me-teaching.jpg', 'David Latimer instructing in the training room', 'shot tall')}
+   <p class="muted" style="font-size:.82rem;margin-top:10px;text-align:center">David Latimer — training the human end of the leash.</p></div>
 </div></section>
 
 <section class="sec wash"><div class="wrap split">
