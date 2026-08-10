@@ -1530,6 +1530,9 @@ method_body = f"""
   <div class="quote" style="font-size:1.35rem">"The sit was not the discovery. It was the communication."</div>
   <p class="lead" style="margin-top:16px">A detector dog does not suddenly recognize target odor at the moment it sits. Recognition happened earlier. The dog met odor, and its behavior began to change — respiration, head position, body tension, movement. The trained final response is the <i>end</i> of a conversation that started the moment odor became meaningful. Understanding that conversation is the difference between simply handling a detector dog and learning to read one.</p>
   <p>This is the idea the whole LSOC method is built on: <b>the dog has been talking since the first breath of the search.</b> The handler's job is to learn its language.</p>
+  <p>Watch a good team work and you will see it. The dog casts across a room, working the low seams where air collects. It passes a doorway, then checks — a half-step of hesitation, a lift of the head into the current coming under the door. The respiration shifts from an open pant to short, closed sniffs. The tail slows and stiffens. The dog turns back into the odor it just crossed, drives to the base of the door, and only then sits. To an untrained eye, the sit was the moment the dog "found it." To a handler who reads behavior, the find happened four seconds earlier, at the doorway, and everything after was the dog closing the distance to a source it had already committed to. The sit was the sentence at the end of the paragraph.</p>
+  <p>Most of the profession never learns to read the paragraph. It trains the sit, rewards the sit, records "alert," and testifies to the alert. That works right up until it doesn't — until a defense attorney asks the handler to describe what the dog <i>did</i>, not what it was trained to do, and the handler has nothing to say. The honest answer to "how did you know the dog was in odor?" cannot be "because it sat." It has to be a description of behavior: what changed, when, and how the handler knew the difference between interest and commitment. That description is the whole ballgame, and it is a skill that has to be built deliberately, on purpose, from the first day of training.</p>
+  <p>What follows is how we build it. None of it is proprietary magic. It is a way of seeing, a vocabulary for what you see, and a discipline for proving it later. Read it as an operator, because that is who it was written for.</p>
 </div></section>
 
 <section class="sec wash"><div class="wrap">
@@ -1543,6 +1546,15 @@ method_body = f"""
     <div class="card"><div class="ic">5</div><h3>Trained final response</h3><p>The dog reports its conclusion — the sit is phase five, not the whole story.</p></div>
     <div class="card" style="background:var(--navy);color:#fff;border-color:var(--navy)"><h3 style="color:#fff">Why it matters</h3><p style="color:#c4d2dd">Phases 3 and 4 are the investigation. A handler who can describe them can explain — and defend — exactly what the dog did.</p></div>
   </div>
+  <div style="max-width:760px;margin:34px auto 0">
+   <p>Naming the phases is not academic. It is the difference between a handler who can testify and one who can only assert. Walk a single search through the sequence and the point becomes obvious.</p>
+   <p><b>Phase one — responds to the search command.</b> The work begins on cue, not before. A dog that is "searching" before it is sent is a dog that is freelancing, and a freelancing dog is one a court can argue was cueing on something other than odor. The command is a clean start line: everything after it is on the record.</p>
+   <p><b>Phase two — systematic search.</b> The dog covers the area methodically, working air currents, checking seams and corners, moving with intent but without recognition. There is no target odor yet — or none the dog has met. This phase looks like nothing is happening. It is actually the dog doing exactly what it should: eliminating negative space. An honest "there is nothing here" is built in phase two, and it matters as much as a find.</p>
+   <p><b>Phase three — detection.</b> Odor becomes meaningful. This is the hinge of the entire search, and it is almost always missed, because it is subtle and it is fast. The dog crosses a scent cone and something registers. You will see it first in the breath — the open, cooling pant closes into rapid, shallow sniffs as the dog samples. This is the moment recognition begins. It is not yet the answer; it is the dog deciding there is a question worth working.</p>
+   <p><b>Phase four — change of behavior.</b> Now the dog commits. The head drops or lifts to place the odor. The tail changes — often stiffening, sometimes accelerating. Footwork tightens into bracketing: the dog works back and forth across the edges of the odor plume, narrowing, overshooting, correcting, driving toward the strongest concentration. This is the investigation. Phases three and four are where the dog actually solves the problem, and they are exactly what a handler must be able to describe under oath.</p>
+   <p><b>Phase five — trained final response.</b> The sit, the down, the freeze — whatever the dog was taught. It is the dog's report of a conclusion it reached one, two, four seconds earlier. It is real, and it matters, but it is the last line, not the story. A team that only sees phase five is reading the last page of a book and calling it the plot.</p>
+   <p>When a handler can narrate a search this way — command, search, detection, change of behavior, response — two things happen. The training gets better, because the handler is coaching the whole sequence instead of drilling a sit. And the testimony gets better, because the handler can answer the only question that ever really matters on the stand: <i>what did the dog do, and how did you know what it meant?</i></p>
+  </div>
   {figure2(("lsoc-105-lab-saeching-for-source.jpg","The systematic search — before the sit"), ("lsoc-104-lab-freeze-alert.jpg","Phase five — the trained final response"))}
 </div></section>
 
@@ -1550,25 +1562,27 @@ method_body = f"""
   <div>
     <div class="eyebrow">Framework</div>
     <h2>The Four Classes of Behavior</h2>
-    <p>Not everything a dog does means the same thing. Separating these keeps a handler honest about what the dog is actually telling them.</p>
+    <p>Not everything a dog does means the same thing, and a handler who blurs these together will misread the dog and mislead a court. Separating them keeps you honest about what the dog is actually telling you.</p>
     <ul class="tick">
-      <li><b>Intrinsic</b> — what the dog does by nature.</li>
-      <li><b>Trained</b> — what we deliberately taught, including the final response.</li>
-      <li><b>Independently learned</b> — what the dog figured out on its own.</li>
+      <li><b>Intrinsic</b> — what the dog does by nature: the drive to hunt, the way it uses air, the tempo that is simply that animal.</li>
+      <li><b>Trained</b> — what we deliberately taught, including the final response and the search pattern.</li>
+      <li><b>Independently learned</b> — what the dog figured out on its own, for better or worse. Dogs are relentless pattern-finders. A dog that learns "aids are always on the left rear tire" has learned something we did not teach and do not want.</li>
       <li><b>Handler-influenced</b> — what the dog did because of us, knowingly or not.</li>
     </ul>
-    <p class="muted">That last class is the dangerous one. It's why we train to reduce influence and test to expose it.</p>
+    <p>That last class is the dangerous one, and it is dangerous precisely because it is invisible to the person causing it. A handler who slows down at the trunk they searched last week, who tightens the leash near the spot the training aid "should" be, who exhales when the dog reaches the right car, is running a second, silent conversation the dog can hear perfectly. The dog is not cheating. It is doing its job — reading its environment, and the handler is part of the environment. Our answer is not to pretend influence away. It is to train to minimize it and to test in a way that exposes it, so that when the dog commits, we know the commitment came from odor and not from us.</p>
   </div>
   <div>
     <div class="eyebrow">Reading the dog</div>
     <h2>Every dog has an accent.</h2>
-    <p>Reading behavior is a learned skill, built on knowing your individual dog's baseline and watching for change:</p>
+    <p>No two dogs say it the same way. One dog's change of behavior is a dramatic head-snap; another's is a barely perceptible drop in the tail and a change in cadence you would miss if you blinked. That is why there is no universal checklist that reads every dog. There is only <i>your</i> dog, and the baseline you have learned by watching it work a hundred clean searches so you know what "normal" looks like the moment it stops being normal.</p>
+    <p>Reading behavior is a learned skill, built on that baseline and watching for change:</p>
     <ul class="tick">
-      <li><b>Respiration</b> — often the first and clearest tell.</li>
-      <li><b>Head position</b> — where the dog is placing the problem.</li>
-      <li><b>Tail carriage</b> — tension and interest.</li>
-      <li><b>Footwork</b> — bracketing, overshooting, source commitment.</li>
+      <li><b>Respiration</b> — often the first and clearest tell. The open, thermoregulating pant closes into rapid, deliberate sampling the instant the dog meets odor. Learn to hear it and you are reading detection in real time.</li>
+      <li><b>Head position</b> — where the dog is placing the problem: up into a current, down at a seam, snapping back to a source it overran.</li>
+      <li><b>Tail carriage</b> — tension, height, and speed. For most dogs it stiffens or changes rhythm at commitment. For yours it may do the opposite; that is why baseline is everything.</li>
+      <li><b>Footwork</b> — bracketing back and forth across the plume, overshooting and correcting, then the hard drive to source that says the dog has stopped searching and started answering.</li>
     </ul>
+    <p>The discipline that ties it together is simple to say and hard to live: <b>let the dog stop you; you don't stop the dog.</b> The handler who yanks a dog off odor because it "already alerted over there," or who steers a dog toward where the handler expects the aid to be, has replaced the dog's nose with their own assumptions. Our job is to present the search, keep our influence out of it, and then read — carefully, honestly — what the animal tells us.</p>
     <div class="quote">"Every search is a conversation. The dog is talking. The question is whether the handler understands the language."</div>
   </div>
 </div>
@@ -1587,12 +1601,50 @@ method_body = f"""
   </div>
 </div></section>
 
-<section class="sec"><div class="wrap split">
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Building independent dogs</div>
+  <h2>Teach the dog it is allowed to say "I don't know."</h2>
+  <p>The single most valuable thing a detector dog can learn is that a blank area is an acceptable answer. A dog that believes every search must end in a find will eventually manufacture one — because the reward, the handler's body language, and the pattern of training have all taught it that "no odor" is failure. That dog is not lying. It has simply learned the wrong lesson, and it has learned it from us.</p>
+  <p>So we build the opposite lesson on purpose. We run <b>blank searches</b> — areas with no target odor — and we reward the dog for working them honestly and clearing them. We use <b>productive failure</b>: problems the dog cannot solve by guessing, only by working, so that quitting on a bad assumption costs nothing and persistence pays. Over hundreds of repetitions the dog internalizes a quiet confidence — it does not have to please us, it has to solve the odor problem, and sometimes the honest solution is "there is nothing here." A dog that can say "I don't know" is a dog whose "yes" means something.</p>
+  <p>This is also why we <b>reward the investigation, not just the response.</b> If the only thing that ever earns a paycheck is the sit, the dog learns to rush to the sit. If the searching, the bracketing, the honest problem-solving all get valued, the dog learns to work the problem thoroughly and let the response arrive when it has earned it. Reward is information. We are careful about what we are actually telling the dog every time we deliver it.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The Invisible Leash</div>
+  <h2>The dog can hear everything you didn't mean to say.</h2>
+  <p>In the early 1900s a horse named Clever Hans appeared to do arithmetic, tapping out answers with his hoof. He was genuinely brilliant — not at math, but at reading the involuntary tension and relief in the people around him, who leaned in as he approached the right number and relaxed when he reached it. He was answering the humans, not the question. Every detector dog is a Clever Hans waiting to happen, and the research bears it out: Dr. Lisa Lit's work showed that handler beliefs about where an aid was hidden measurably changed where dogs alerted — including alerts on locations that held no target odor at all.</p>
+  <p>We take that seriously instead of pretending we are immune to it. Handler influence travels down four channels: <b>physical</b> (leash tension, footwork, where you plant yourself), <b>visual</b> (where you look, how you lean, a glance at the "right" spot), <b>verbal</b> (a change in tone, a repeated command, the timing of praise), and <b>emotional</b> (the anticipation the dog can feel coming down the leash). None of these require intent. A handler who knows where the aid is will leak it, every time, unless the training and the testing are built to prevent it.</p>
+  <p>The fix is discipline in how we move and rigor in how we test. We teach handlers to present a search the same way whether they know the answer or not, and then we take the answer away from them entirely. <a href="/resources-handler-influence-invisible-leash.html">Read the full breakdown of handler influence and how honest teams test for it →</a></p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The Scent Board System</div>
+  <h2>Teach the dog to think before it alerts.</h2>
+  <p>Our signature training tool is a deceptively simple one: a board of identical containers, some holding target odor and some holding distractors or nothing at all, arranged so the dog cannot succeed by memorizing a pattern. The Scent Board System trains the three skills that separate a discriminating dog from a guessing one — <b>discrimination</b> (target odor versus the food, the toy, the novel smell that isn't the job), <b>bracketing</b> (working the edges of odor to pin the strongest source), and <b>source commitment</b> (driving to the actual origin instead of responding to a pool of scent nearby).</p>
+  <p>Because the layout changes and the answer moves, the dog cannot cheat its way to a reward. It has to actually work the odor, every rep. Over time this builds a dog that pauses at ambiguity instead of blurting an answer — a dog that thinks. That habit, built on a board in a training room, is exactly the habit you want when the same dog is working a real vehicle on a real shift with a real defense attorney waiting months down the road.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Trust, but verify</div>
+  <h2>Reliability is proven, not asserted.</h2>
+  <p>If a handler always knows where the aid is hidden, no amount of good intention makes the results trustworthy — the Invisible Leash sees to that. So we build proof into the training itself with <b>blind</b> and <b>double-blind</b> testing. In a blind test, the handler does not know where the target is. In a double-blind test, no one present knows — not the handler, not the person running the exercise — so there is no one for the dog to read but the odor. A dog that performs under double-blind conditions is a dog demonstrating that it works the problem, not the people.</p>
+  <p>This is not a gimmick we run once for a certificate. It is a habit of mind. Every honest evaluation asks the same question a court will: how do you know the dog was responding to odor and not to you? A team that has lived inside blind testing has a real answer. A team that has only ever trained where the handler knew the answer has a hope, and hope does not survive cross-examination.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The training record</div>
+  <h2>The court knows only what you recorded.</h2>
+  <p>Months or years after a deployment, no one will remember the search. The dog cannot testify. The handler's memory will be picked apart. What remains is the record — the training logs, the maintenance history, the testing results, the documented failures as well as the finds. If it is thorough and honest, it is the strongest evidence in the room. If it is thin, cherry-picked, or absent, it becomes the defense's best exhibit.</p>
+  <p>So we document like it will be read aloud in court, because someday it might be. We record misses and false responses, not just successes, because a training log with no failures in it is not a record of a perfect dog — it is a record of a dishonest logbook, and any competent attorney knows it. Honest documentation of a dog's real error rate is not a weakness to hide. It is the foundation of a reliability a court can actually trust.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap split">
   <div>
     <div class="eyebrow">Where it all points</div>
     <h2>Train for the courtroom, not just the yard.</h2>
     <p class="lead">Every exercise is future evidence. The most important trial your dog will ever be part of begins months before anyone files a motion — in how the team was trained, evaluated, and documented.</p>
     <p>David's work is grounded in the case law that governs detector-dog evidence — <i>Harris, Jardines, Caballes, Rodriguez, Place, Edmond</i> — and in the discipline of separating observation from interpretation on the witness stand. Reliability that can't be documented and explained isn't reliability a court can use.</p>
+    <p>On the stand, the most important skill a handler has is the discipline to say what the dog <i>did</i> and stop there — to keep observation and interpretation in separate sentences. "The dog's respiration changed, it snapped its head back to the seam of the trunk, bracketed twice, and sat" is an observation a handler can defend. "The dog knew there were narcotics in the car" is an interpretation that a good attorney will take apart, because the dog knows odor, not law. A handler trained our way testifies to behavior — precise, bounded, honest about the limits of what a dog can tell you — and that testimony holds up precisely because it does not overreach.</p>
     <div class="quote">"Reliability is not something we claim. It is something we demonstrate."</div>
     <a class="btn dark" href="/agencies.html">How this protects an agency's case</a>
   </div>
@@ -1603,9 +1655,11 @@ method_body = f"""
   </div>
 </div></section>
 
-<section class="sec wash"><div class="wrap" style="max-width:820px">
+<section class="sec"><div class="wrap" style="max-width:820px">
   <div class="center"><div class="eyebrow">On integrity</div><h2>The point isn't to win. It's to be right.</h2></div>
   <p class="lead center" style="margin-top:14px">David is a strong advocate for properly trained detector dogs — and an equally strong opponent of using them to &ldquo;beat the system.&rdquo; Honest scrutiny doesn't threaten a competent team; it makes it better. The purpose is to catch offenders, protect the innocent, and present evidence that <i>deserves</i> to be trusted.</p>
+  <p style="margin-top:16px">That is why you will never hear a claim of "100% accuracy" or "never a false alert" from this program. Any trainer who tells you that is either selling something or does not understand the animal. Dogs are living detectors, not instruments; they have off days, they meet odor in confusing places, and an honest team accounts for that instead of hiding it. The goal is not a dog that is never wrong. It is a dog whose work is so well trained, so honestly evaluated, and so thoroughly documented that when it is right — which is the overwhelming majority of the time — you can prove it, and when it is wrong, you already knew the rate and disclosed it. That is what courtroom-defensible actually means, and it is a higher standard than perfection, because it is a standard you can keep.</p>
+  <p style="margin-top:12px">This is the whole philosophy in one breath: a detector dog is a witness, and a witness's value is its honesty. Train the honesty in, test to keep it, document to prove it, and the reliability takes care of itself.</p>
 </div></section>
 
 <section class="sec tight"><div class="wrap"><div class="eyebrow center">The Scent Board System</div>{figure2(("lsoc-109-dog-sniffing-bd-3.jpg","Discrimination and source commitment on the board"), ("lsoc-98-bedbug-dog-working-board.jpg","Working a detection problem"))}</div></section>
