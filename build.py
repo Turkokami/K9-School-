@@ -764,7 +764,7 @@ page("index.html", f"{BIZ} — {TAGLINE}",
 # ============================================================
 # Reusable hub builder
 # ============================================================
-def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_html, faq, seo_title, seo_desc, crumb, photos=None):
+def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_html, faq, seo_title, seo_desc, crumb, photos=None, deep=""):
     faq_h = faq_html(faq)
     photos = photos or []
     hero_item = HERO_PHOTOS.get(slug)
@@ -795,6 +795,8 @@ def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_htm
     {fig_b}
   </div>
 </section>
+
+{deep}
 
 <section class="sec">
   <div class="wrap"><div class="center"><div class="eyebrow">Before you decide</div><h2>The questions you're already asking</h2></div>
@@ -860,13 +862,49 @@ ag_faq = [
  ("Can you support federal or multi-agency requirements?",
   f"Yes. {fill('Note any specific approvals/vetting relevant to federal work.')}"),
 ]
+ag_deep = """
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The real decision</div>
+  <h2>A K9 is a liability decision before it's a training decision.</h2>
+  <p>When a dog rides in a patrol car, it is not just a tool your unit uses — it is a witness your cases will rest on and a decision your agency will have to defend. Every deployment that dog makes becomes part of a chain that ends, sometimes, in a courtroom, a review board, or a headline. That is the part of the purchase that rarely gets priced. A cheap dog that alerts unreliably, or a handler who cannot explain what the dog actually did, does not save you money. It costs you cases, it costs you credibility, and one bad ruling can taint every deployment that came before it.</p>
+  <p>We build for that reality first. The question we help you answer is not "can this dog find the aid in a controlled yard?" Almost any dog can do that. The question is: will this team hold up in the environment you actually work, under the scrutiny you will actually face — the suppression hearing, the internal audit, the cross-examination months after everyone has forgotten the details? If a team cannot survive that, it does not matter how flashy it looks on a demo. We would rather you buy the team that survives it.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">What you're actually buying</div>
+  <h2>A finished dog is only half a deployable team.</h2>
+  <p>Reliability is a property of the dog and the handler together, so we do not sell a dog and wish you luck. A deployable team is a finished detection dog matched to the work it will really do — single- or dual-purpose, selected for the environment, the tempo, and the odors your mission demands — paired with a handler certified to run it. The best dog in the country underperforms with an undertrained handler, and a sharp handler is grounded without a sound dog. We deliver both ends of the leash, together, evaluated as a unit.</p>
+  <p>"Finished" means the dog works the odor problem and reports honestly, including the honest "there is nothing here" that keeps a dog from manufacturing answers under pressure. It means the handler can read the dog through the <a href="/method.html">Five Phases</a> — command, search, detection, change of behavior, response — and can articulate what happened, not just that the dog sat. A handler who can only say "the dog alerted" is a handler who will struggle the first time a defense attorney asks a harder question. We train yours to answer it.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Courtroom-defensible by design</div>
+  <h2>The strongest evidence is the paperwork nobody sees at the traffic stop.</h2>
+  <p>Months after a deployment, the dog cannot testify and memory gets picked apart. What remains is the record. That is why every team we build is documented the way it would be read aloud in court — training logs, maintenance history, and testing results that include the misses, not just the finds. A training record with no failures in it is not proof of a perfect dog; it is proof of a dishonest logbook, and any competent attorney knows it. Honest documentation of a dog's real error rate is not a weakness to hide. It is the foundation of a reliability a court can actually use.</p>
+  <p>We prove that reliability with blind and double-blind testing, so the record shows the dog works the odor and not the handler's expectation. Our approach is grounded in the case law that governs this work — <i>Harris, Jardines, Caballes, Rodriguez, Place, Edmond</i> — and in training handlers to keep observation and interpretation in separate sentences on the stand. See how we build it on <a href="/method.html">The Method</a>, and how we document it against the <a href="/certification.html">LSOC courtroom-defensible standard</a>.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Expert-witness &amp; litigation support</div>
+  <h2>When a deployment is challenged, you want the record — and the witness.</h2>
+  <p>David Latimer is a retired chief of police and FBI National Academy graduate who reviews detector-dog cases and testifies as an expert. That work is always done on the basis of honest evaluation — the goal is truth, never to manufacture a result or "beat" the other side. For an agency, that matters twice over: it means the teams we build are trained by someone who knows exactly how they will be tested in litigation, and it means that when your program or a specific deployment is challenged, you have access to a reviewer who can speak to reliability, documentation, and defensibility in language a court understands. See <a href="/consulting.html">Consulting</a> for program-level and litigation support.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Single- or dual-purpose</div>
+  <h2>Equipped for your mission, maintained after it ships.</h2>
+  <p>We place single-purpose detection dogs and dual-purpose dogs across the disciplines agencies actually need — narcotics, explosives, firearms, currency, and electronic-storage detection — selected for the tempo and environment of your unit rather than sold off a one-size shelf. A screening-line dog and an interdiction dog are not the same animal, and matching the dog to the mission is the first place a placement succeeds or fails.</p>
+  <p>Placement is the start of the relationship, not the end of it. Reliability drifts without maintenance — handlers pick up habits, dogs test boundaries, and a team that was sharp at delivery can quietly erode over a year of real work. We offer maintenance training and post-placement support so performance stays where it belongs and the documentation stays current. When your program has to answer to a court, an inspector, or a chief, that continuous record is the difference between a team you can stand behind and one you are hoping about.</p>
+  <p>The one-page <a href="/downloads/K9School-Agency-Capability-Brief.pdf">capability brief</a> puts the essentials in front of a decision-maker: what we deliver, how it's documented, and why it holds up. Hand it up your chain of command, then start the conversation and we'll scope your mission profile directly.</p>
+</div></section>
+"""
 hub("agencies.html","a","For Law Enforcement Agencies",
     "Detection K9s your unit can deploy with confidence.",
     "For procurement leads and K9 supervisors who can't afford a team that fails in the field — dogs and handlers proven in deployment and documented to a defensible standard.",
     "Request a Capability Brief","/agencies.html#brief", ag_proof, ag_offer, ag_faq,
     "Detection Dogs & Handler Certification for Agencies | K9School",
     "Finished detection dogs and certified handlers for law enforcement — narcotics, explosives, firearms and more, documented to the LSOC standard. Request a capability brief.",
-    "Agencies", photos=AGENCIES_PHOTOS)
+    "Agencies", photos=AGENCIES_PHOTOS, deep=ag_deep)
 
 # ---- TRAINING ----
 tr_offer = f"""
@@ -902,13 +940,48 @@ tr_faq = [
  ("What certification do I earn?",
   "Certification to the LSOC standard, documenting your team's reliability to a recognized benchmark."),
 ]
+tr_deep = """
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">What we actually teach</div>
+  <h2>We don't train the sit. We train you to read the dog.</h2>
+  <p>Most handler courses teach a dog to sit at odor and teach a person to reward it. You leave with a certificate and a dog that alerts — and the first time the work gets hard, or a search goes sideways, or an attorney asks what the dog actually did, you discover how little that certificate prepared you for. We teach something more durable and more difficult: how to see. How to read a dog through the <a href="/method.html">Five Phases of behavior</a>, how to know your individual dog's baseline so you catch the change of behavior the instant it happens, and how to tell the difference between a dog working odor and a dog reading you.</p>
+  <p>That skill — reading behavior, then explaining it — is what separates a person who owns a detection dog from a handler who can deploy one. It cannot be handed to you on a lanyard. It is built, rep by rep, on real problems, and it is the core of every course we run. The dog is the easy part. The human end of the leash is where reliability is won or lost, and it is where we spend the work.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The path</div>
+  <h2>Foundation, handler, instructor — a real career, not a weekend.</h2>
+  <p><b>Foundation scent detection</b> builds the core correctly from the start: imprinting on odor, teaching the dog to hunt and to problem-solve, and establishing the honest search habits that everything else stands on. Get the foundation wrong and you spend years patching cracks; get it right and the dog is easy to advance.</p>
+  <p><b>Handler certification</b> is where the dog and the person become a team. You learn to run a systematic search, to read your dog's tells, to keep your own influence out of the work, and to document what you did so it holds up later. You leave able to run a reliable, court-defensible team — because we drill the whole sequence, not just the final response.</p>
+  <p><b>Instructor certification</b> is for the handler ready to train others and hold a program to standard. It is the difference between doing the work and being able to teach, evaluate, and defend it. A career in this field is a ladder — foundation to handler to instructor — and we built the training so you can climb it with a standard behind you at every rung.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Reduce your own influence</div>
+  <h2>The hardest thing to train is the person holding the leash.</h2>
+  <p>Every handler leaks. Where you look, how you plant your feet, a change in your breathing near the spot you think the aid is hidden — dogs read all of it, because you are part of the environment they are searching. This is the <a href="/resources-handler-influence-invisible-leash.html">Invisible Leash</a>, and it is not a character flaw; it is physics and biology, documented in the research. We do not pretend you are immune to it. We train you to move the same way whether you know the answer or not, and then we take the answer away from you with blind and double-blind exercises, so you learn — in the safety of training — exactly how your body talks to your dog. Handlers who have felt that in a controlled setting are the ones who can be trusted in an uncontrolled one.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">What you leave with</div>
+  <h2>Outcomes, not attendance.</h2>
+  <p>A certificate proves you showed up. We care whether you can do the job. When you finish, you should be able to present a search cleanly, read your dog through every phase, keep your influence out of the work, recognize an honest "no odor here," and write a training record that would survive being read aloud in a hearing. That is a higher bar than a passing score on a demo, and it is the bar the work will actually hold you to. If you want the credential without the competence, there are faster places to get it. If you want to be the handler other units call when it matters, start here.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Who this is for</div>
+  <h2>New to detection, or fixing a dog you already run.</h2>
+  <p>Our courses serve a wide range — officers assigned to a K9 unit for the first time, pest-control and conservation professionals adding a detection capability, working handlers whose dogs have developed problems, and experienced trainers moving toward instructor-level competence. No formal experience is required for the foundation and handler tracks, though a genuine willingness to be coached on your own habits helps more than any résumé. The one thing every student has in common when they leave is that they stopped managing a dog and started reading one.</p>
+  <p>Training takes place on-site in Lincoln, Alabama, with real field components rather than yard-only drills, because a dog that only works a clean training room is a dog you have not actually tested. Bring your own dog to build the specific team you'll deploy, or work a program dog to learn the mechanics first. Either way, expect to be the one who gets corrected: most "dog problems" are handler problems, and the fastest way to a reliable team is to fix the end of the leash that talks back.</p>
+</div></section>
+"""
 hub("training.html","g","Handler &amp; Instructor Training",
     "Ready on day one — not just certified.",
     "Handler certification, instructor certification, and foundation detection training built around field competence and a standard that stands up when it matters.",
     "Apply / Enroll","/training.html#apply", tr_proof, tr_offer, tr_faq,
     "Detection Dog Handler & Instructor Certification Courses | K9School",
     "Handler and instructor certification and foundation scent-detection training. Field-first, outcome-driven, and certified to the LSOC standard. Apply or get the syllabus.",
-    "Training", photos=TRAINING_PHOTOS)
+    "Training", photos=TRAINING_PHOTOS, deep=tr_deep)
 
 # ---- CONSULTING ----
 co_offer = f"""
@@ -949,13 +1022,41 @@ co_faq = [
  ("How is consulting priced?",
   f"Custom-quoted by scope after a short assessment call. {fill('Add day-rate or package ranges if you want them public.')}"),
 ]
+co_deep = """
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Where programs break</div>
+  <h2>Most program failures were built in at the start.</h2>
+  <p>When a detection program gets into trouble — a suppression ruling, a failed audit, a unit that quietly stops trusting its own dogs — the cause is almost never the moment it surfaced. It was set months or years earlier: a dog selected for the wrong work, a foundation rushed, a handler certified before they could read their dog, a training record that documents only successes. By the time the problem shows up in a courtroom or an inspection, it has roots. Fixing it means going back to those roots, honestly, and that is uncomfortable work most people avoid until they cannot.</p>
+  <p>David has done this from every seat — as a trainer, as a handler, as a chief of police who had to answer for a program, and as an expert witness who has seen exactly how programs come apart under scrutiny. That vantage is the point. He is not auditing your program against a binder of best practices he read once. He is evaluating it against what actually happens when a defense attorney, an inspector general, or a review board goes looking for the weak seam.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Standing one up</div>
+  <h2>Build it right the first time — selection to deployment.</h2>
+  <p>If you are creating a detection capability from scratch, the decisions you make early are the ones you will live with longest: what odors and environments you are actually equipping for, what kind of dogs fit that work, how handlers will be selected and developed, how you will test and document reliability, and how the whole thing will hold up to the oversight your organization answers to. We help you make those decisions deliberately instead of discovering them the hard way — a program designed backward from the scrutiny it will face, not forward from a catalog of dogs for sale.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Fixing what you have</div>
+  <h2>A standards-based assessment finds the gap before an auditor does.</h2>
+  <p>If you already have a program and a nagging sense it would not survive a hard look, an honest assessment is cheaper than the ruling that would otherwise teach you the same lesson. We evaluate the real thing: how dogs are selected and maintained, whether handlers can read and articulate their dogs' behavior, whether testing is genuinely blind, and whether the training records would help you or hurt you if they were read aloud in a hearing. You get a straight account of where you stand and a prioritized path to close the gaps — measured against the same <a href="/certification.html">LSOC courtroom-defensible standard</a> the rest of our work is built on.</p>
+  <p>And when a program or a case is already being challenged, David provides expert review and testimony grounded in honest evaluation. The goal is never to manufacture a defense or beat the other side; it is to tell the truth about reliability clearly enough that a court can rely on it. That is the same discipline we teach on <a href="/method.html">The Method</a> — it just happens to also be what wins the argument.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Selection, testing &amp; development</div>
+  <h2>The pieces of a program, evaluated by someone who's run all of them.</h2>
+  <p>Program consulting is rarely one thing. It might be <b>K9 selection and testing</b> — helping you evaluate candidate dogs against the work they will actually do, so you stop buying on a demo and start buying on a defined standard. It might be <b>handler and instructor development</b> — building the human competence a program lives or dies on. It might be a <b>standards-based audit</b> that produces a straight account of where you stand, or the <b>design of a testing regime</b> that is genuinely blind and genuinely documented. And it might be <b>speaking and seminars</b>, bringing this operator-to-operator approach to your team or event. We scope it to what your program actually needs on a focused assessment call, and we quote it honestly.</p>
+  <p>What ties all of it together is the vantage point. This is not consulting from a person who read about detection programs. It is evaluation from a retired chief of police, a working detector-dog trainer since 1999, and an expert witness who has watched programs succeed and fail under the only test that ultimately counts — real scrutiny, in the real world, after the fact.</p>
+</div></section>
+"""
 hub("consulting.html","m","Program Consulting",
     "The operator who fixes detection programs.",
     "For agencies and organizations standing up a new detection program or worried theirs won't pass an audit — program development, evaluation, and selection from someone who's done the work.",
     "Book a Program Assessment","/consulting.html#book", co_proof, co_offer, co_faq,
     "K9 Detection Program Development, Audits & Consulting | K9School",
     "Detection program development, standards-based audits, K9 selection and testing, and handler/instructor development. Book a program assessment with David Latimer.",
-    "Consulting", photos=CONSULTING_PHOTOS)
+    "Consulting", photos=CONSULTING_PHOTOS, deep=co_deep)
 
 # ---- DETECTION DOGS ----
 dd_offer = f"""
@@ -998,13 +1099,46 @@ dd_faq = [
  ("How much does a detection dog cost?",
   f"It depends on discipline and finish level. {fill('Add price ranges or keep as inquiry.')}"),
 ]
+dd_deep = """
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Start with the job, not the dog</div>
+  <h2>The right dog is defined by the work — before you ever meet it.</h2>
+  <p>People shop for a detection dog the way they shop for a truck: they look at the dog first. That is backward. A dog selected for calm, methodical bed-bug work in occupied apartments is a poor match for high-tempo vehicle interdiction, and a hard-charging interdiction dog will wash out of a hotel room in an afternoon. Before we talk about any specific dog, we define the job precisely — the target odors, the environments, the daily workload and climate, and who will handle it. The clearer that profile, the better the match, and the fewer expensive surprises after delivery.</p>
+  <p>This is where a placement earns or loses its value. A dog is a multi-year investment your operation's results ride on. Get the selection right and the work is almost easy; get it wrong and no amount of training fully recovers it. So we would rather spend the time up front, ask the uncomfortable questions about how you actually work, and match you to a dog built for it — even when that means telling you the dog you were excited about is wrong for the job.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Green, started, finished</div>
+  <h2>Know what stage you're buying — and what your team can develop.</h2>
+  <p>Dogs are sold at different stages, and the right choice depends on your handler's experience and your timeline. A <b>green</b> dog shows aptitude but isn't trained — the lowest price and the longest road, and only a good bet if you have an experienced trainer to develop it. A <b>started</b> dog has foundation odor work underway. A <b>finished</b> dog works the odor problem and can be certified with a handler quickly — the highest cost and the lowest risk, fastest to real deployment. There is no universally right answer, but there is a right answer for you, and it depends on an honest look at your team's ability to bring a dog along. For most businesses and agencies, a finished dog paired with handler certification is the lowest total cost once you account for the time and risk of developing one yourself.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Disciplines</div>
+  <h2>One approach, many kinds of odor.</h2>
+  <p>The principles that make a dog reliable do not change with the target — a bed-bug dog and an accelerant dog are both trained to discriminate, to commit to source, and to tell the truth about what is and isn't there. What changes is the environment and the stakes. We place and support dogs across <b>bed bug</b> detection for pest control and property management, <b>arson / accelerant</b> detection for fire investigation and insurance work, <b>conservation</b> detection for wildlife and invasive species, and <b>narcotics, explosives, and firearms</b> detection for agencies and security teams. The legacy Kip K9 work spanned much of this range, and it all runs on the same method.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">You're buying a team</div>
+  <h2>A dog without a trained handler is half a system.</h2>
+  <p>The finest dog we could hand you will underperform with an undertrained handler, so we do not treat handler training as an add-on — it is half the system, and we build it into the placement. Whether you are a pest-control company protecting a reputation on every inspection or an agency putting a dog on the street, what you actually need is a <i>team</i> that can work reliably and, when it matters, explain and defend what it did. That is what we deliver: a dog selected for your real work, a handler trained to read it, and the support to keep the team sharp after the sale.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Insist on proof</div>
+  <h2>Watch the dog work. Ask for the records. Walk away if you can't.</h2>
+  <p>The best protection a buyer has is simple, and it costs nothing: insist on seeing the dog work in an environment like yours, and ask for the documentation of what was evaluated. A reputable program tests dogs against a defined standard and hands you the record. If a seller resists letting you see the dog work, or cannot produce evaluation records, that reluctance is your answer — walk away. A demo in a parking lot the seller controls tells you very little; a dog worked cold in a realistic problem tells you almost everything.</p>
+  <p>We hold ourselves to the same rule we would tell you to demand of anyone. Every dog we place is evaluated to the <a href="/certification.html">LSOC courtroom-defensible standard</a>, and the handler is trained to read the <a href="/method.html">behavior behind the response</a> — not just to trust the sit. For a commercial operator, that means a dog whose finds protect your reputation instead of risking it. For an agency, it means a team whose work survives the hearing. Either way, you are buying evidence you can stand behind, which is the only kind worth owning.</p>
+</div></section>
+"""
 hub("detection-dogs.html","p","Commercial &amp; Operational Detection Dogs",
     "A working dog your reputation can ride on.",
     "For pest control, restoration, conservation, security, and agencies buying a detection dog — placement-ready teams selected and trained for the environment they'll actually work in.",
     "Check Availability","/detection-dogs.html#availability", dd_proof, dd_offer, dd_faq,
     "Detection Dogs for Sale — Bed Bug, Arson, Narcotics, Conservation | K9School",
     "Placement-ready detection dogs for bed bug, arson/accelerant, conservation, narcotics and explosives detection — selected, trained, and paired with handler certification. Check availability.",
-    "Detection Dogs", photos=DETECTION_PHOTOS)
+    "Detection Dogs", photos=DETECTION_PHOTOS, deep=dd_deep)
 
 # ============================================================
 # PROOF
