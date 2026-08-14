@@ -117,6 +117,12 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .fig-2 img{aspect-ratio:4/3;object-fit:cover}
 @media(max-width:680px){.fig-2{grid-template-columns:1fr}}
 
+/* AEO QUICK ANSWER */
+.qa-sec{padding-top:0}
+.quick-answer{max-width:820px;margin:0 auto;background:var(--wash);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--r);padding:20px 24px}
+.quick-answer .qa-label{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--amber-d);margin-bottom:6px}
+.quick-answer p{margin:0;font-size:1.08rem;line-height:1.62;color:var(--ink)}
+
 /* LIST */
 .tick{list-style:none;margin:14px 0}
 .tick li{position:relative;padding-left:30px;margin-bottom:10px;color:var(--steel)}
