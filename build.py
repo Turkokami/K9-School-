@@ -148,6 +148,13 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .fig-2 img{aspect-ratio:4/3;object-fit:cover}
 @media(max-width:680px){.fig-2{grid-template-columns:1fr}}
 
+/* STICKY MOBILE CLICK-TO-CALL */
+.callbar{display:none}
+@media(max-width:760px){
+ .callbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;align-items:center;justify-content:center;gap:8px;background:var(--gold);color:#0a1a33;font-weight:800;font-size:1rem;padding:13px 16px;text-decoration:none;box-shadow:0 -6px 20px rgba(0,0,0,.2)}
+ body{padding-bottom:54px}
+}
+
 /* AEO QUICK ANSWER */
 .qa-sec{padding-top:0}
 .quick-answer{max-width:820px;margin:0 auto;background:var(--wash);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--r);padding:20px 24px}
@@ -369,6 +376,7 @@ def page(slug, title, desc, body, nodes=None, active=None, canonical=None, crumb
 {nav_html(active)}
 {body}
 {FOOTER}
+<a class="callbar" href="tel:{PHONE_TEL}" aria-label="Call David at {PHONE}">📞 Call David — {PHONE}</a>
 <script src="/main.js"></script>
 </body>
 </html>"""
@@ -415,15 +423,23 @@ QUICK_ANSWERS = {
  "resources-handler-influence-invisible-leash.html": "The Invisible Leash is unconscious handler influence — the physical, visual, verbal, and emotional cues a dog reads from the person on the leash, as the Clever Hans case and Dr. Lisa Lit's research show. Honest teams don't deny it; they manage it and audit for it with blind and double-blind testing.",
 }
 
+# intrinsic dimensions for width/height (prevents CLS); WebP for LCP.
+# Produced by optimize_images.py; stdlib json keeps build.py dependency-free.
+_DIMS_FILE = pathlib.Path(__file__).parent / "image-dims.json"
+_DIMS = json.loads(_DIMS_FILE.read_text(encoding="utf-8")) if _DIMS_FILE.exists() else {}
+
 def img(name, alt, cls="shot", style="", eager=False):
+    webp = name.rsplit(".", 1)[0] + ".webp"
+    use = webp if webp in _DIMS else name
+    wh = _DIMS.get(use) or _DIMS.get(name)
+    dim = f' width="{wh[0]}" height="{wh[1]}"' if wh else ""
     st = f' style="{style}"' if style else ""
     ld = ' loading="eager" fetchpriority="high"' if eager else ' loading="lazy"'
-    return f'<img class="{cls}" src="/images/{name}" alt="{html.escape(alt)}"{ld} decoding="async"{st}>'
+    return f'<img class="{cls}" src="/images/{use}" alt="{html.escape(alt)}"{dim}{ld} decoding="async"{st}>'
 
 def gallery(items):
     figs = "".join(
-        f'<figure><img src="/images/{fn}" alt="{html.escape(cap)}" loading="lazy" decoding="async">'
-        f'<figcaption>{html.escape(cap)}</figcaption></figure>'
+        f'<figure>{img(fn, cap, cls="")}<figcaption>{html.escape(cap)}</figcaption></figure>'
         for fn, cap in items
     )
     return f'<div class="gallery">{figs}</div>'
