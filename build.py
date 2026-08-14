@@ -852,7 +852,7 @@ home_body = f"""
   <div class="btnrow" style="justify-content:center"><a class="btn" href="/contact.html">Request a Capability Brief</a><a class="btn ghost" href="tel:{PHONE_TEL}">Call {PHONE}</a></div>
 </div></div></section>
 """
-page("index.html", f"{BIZ} — {TAGLINE}",
+page("index.html", "Operational Detection Dog Training & Placement | K9School",
      "Detection dogs and certified handlers for law enforcement, conservation, and private teams — trained and certified to the LSOC courtroom-defensible standard.",
      home_body, nodes=[faq_schema(home_faq)], active="/index.html")
 
@@ -1074,7 +1074,7 @@ hub("training.html","g","Handler &amp; Instructor Training",
     "Ready on day one — not just certified.",
     "Handler certification, instructor certification, and foundation detection training built around field competence and a standard that stands up when it matters.",
     "Apply / Enroll","/training.html#apply", tr_proof, tr_offer, tr_faq,
-    "Detection Dog Handler & Instructor Certification Courses | K9School",
+    "K9 Handler & Instructor Certification Courses | K9School",
     "Handler and instructor certification and foundation scent-detection training — field-first, outcome-driven, and certified to the LSOC standard.",
     "Training", photos=TRAINING_PHOTOS, deep=tr_deep)
 
@@ -1149,7 +1149,7 @@ hub("consulting.html","m","Program Consulting",
     "The operator who fixes detection programs.",
     "For agencies and organizations standing up a new detection program or worried theirs won't pass an audit — program development, evaluation, and selection from someone who's done the work.",
     "Book a Program Assessment","/consulting.html#book", co_proof, co_offer, co_faq,
-    "K9 Detection Program Development, Audits & Consulting | K9School",
+    "K9 Detection Program Development & Audits | K9School",
     "Detection program development, standards-based audits, K9 selection and testing, and handler/instructor development. Book a program assessment with David Latimer.",
     "Consulting", photos=CONSULTING_PHOTOS, deep=co_deep)
 
@@ -1231,7 +1231,7 @@ hub("detection-dogs.html","p","Commercial &amp; Operational Detection Dogs",
     "A working dog your reputation can ride on.",
     "For pest control, restoration, conservation, security, and agencies buying a detection dog — placement-ready teams selected and trained for the environment they'll actually work in.",
     "Check Availability","/detection-dogs.html#availability", dd_proof, dd_offer, dd_faq,
-    "Detection Dogs for Sale — Bed Bug, Arson, Narcotics, Conservation | K9School",
+    "Detection Dogs for Sale — Bed Bug, Arson & More | K9School",
     "Placement-ready detection dogs for bed bug, arson, conservation, narcotics and explosives work — selected, trained, and paired with handler certification.",
     "Detection Dogs", photos=DETECTION_PHOTOS, deep=dd_deep)
 
@@ -1382,7 +1382,7 @@ person_schema = (f'{{"@type":"Person","@id":"{SITE}/about.html#david","name":"Da
   f'"jobTitle":"Founder, Master Detection Dog Trainer & Expert Witness","worksFor":{{"@id":"{SITE}/#localbusiness"}},'
   '"alumniOf":"FBI National Academy","hasOccupation":{"@type":"Occupation","name":"Retired Chief of Police"},'
   f'"url":"{SITE}/about.html","knowsAbout":["detector dog behavior","detection dog training","accelerant detection","narcotics detection","K9 program development","handler certification","detector dog courtroom testimony","handler influence","blind and double-blind testing"]}}')
-page("about.html","About David Latimer | K9School — Latimer School of Operational K9s",
+page("about.html","About David Latimer — Founder & Trainer | K9School",
      "David Latimer and Latimer School of Operational K9s — operational detection dog training built on real field deployment in Lincoln, Alabama.",
      about_body, nodes=[person_schema], active="/about.html")
 
@@ -1664,7 +1664,7 @@ article("resources-narcotics-detection-k9s.html",
 # --- Guide 5: bed bug dogs for pest control ---
 article("resources-bed-bug-detection-dogs.html",
   "Business Guide",
-  "Bed Bug Detection Dogs: A Guide for Pest Control Businesses",
+  "Bed Bug Detection Dogs for Pest Control Businesses",
   "Why a trained bed bug detection dog can transform a pest-control operation — accuracy, speed, new revenue — and how to choose one that protects your reputation.",
   "For a pest-control business, a bed bug detection dog is a revenue and reputation decision. A reliable dog finds infestations faster and earlier than visual inspection, opens a premium service line, and differentiates you from competitors. An unreliable one does the opposite. Here's how to get it right.",
   [
@@ -1784,7 +1784,7 @@ article("resources-florida-v-harris-k9-handlers.html",
 # --- Guide 9: handler influence ---
 article("resources-handler-influence-invisible-leash.html",
   "Method Guide",
-  "The Invisible Leash: Understanding Handler Influence",
+  "The Invisible Leash: Handler Influence",
   "How handlers unintentionally influence detector dogs — the Clever Hans lesson, the research, and how honest teams train and test to reduce it.",
   "The most powerful force acting on a detector dog often isn't the odor. It's the person holding the leash. Handler influence isn't misconduct — it's usually unconscious — but if you don't understand it, you can't build a dog a court will trust.",
   [
