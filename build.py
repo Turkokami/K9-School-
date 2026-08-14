@@ -1228,6 +1228,37 @@ about_body = f"""
 
 <section class="sec tight"><div class="wrap">{figure2(("lsoc-136-me-and-two-search-dogs-2.jpg","In the field with the dogs"), ("lsoc-73-me-and-handler-trng.jpg","Working alongside a handler"))}</div></section>
 
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">It started with Sport</div>
+  <h2>The dog was always talking. The job was to listen.</h2>
+  <p>Before there was a method, or a badge, or a witness stand, there was a boy watching his father work a liver-spotted pointer named Sport. No electronics, no harsh corrections — just a voice, a read on the dog, and a quiet respect for what the animal already knew how to do. David's father was practicing positive reinforcement before the phrase was fashionable and building compound behavior before anyone had a term for it, and the boy absorbed the lesson that would organize the rest of his life: <b>the dog is always communicating; the handler's only real job is to understand it.</b> Everything on this site is, in one way or another, a footnote to Sport.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Fire taught him to prove it</div>
+  <h2>Where "reliability you can defend" stopped being a slogan.</h2>
+  <p>David's path into detection didn't run through a kennel — it ran through fire. After the military, where he served first as an HVAC technician and then as a small-arms marksmanship instructor, a friendship with a forensic engineer pulled him into the world of fire and explosion investigation. In <b>1999</b> he trained his first accelerant-detection dog, and the work that followed shaped everything about how he thinks. He worked hundreds of fire scenes and helped put arsonists in prison.</p>
+  <p>Arson work is unforgiving in a specific way: the dog's indication is only the beginning. What the dog found has to survive a laboratory, a report, and a defense attorney, months or years later. There is no room for a handler who can only say "the dog alerted." From the start, David had to be able to describe exactly what the dog did, document it honestly, and defend it under cross-examination. That is not a marketing posture he adopted later; it is the environment his career was forged in. Courtroom-defensibility is simply the water he learned to swim in.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">One nose, many disciplines</div>
+  <h2>From accelerants to narcotics, explosives, cadaver, tracking — and pests.</h2>
+  <p>Odor is odor, and the principles that make a dog honest do not change with the target. From accelerant detection, David moved into narcotics, explosives, cadaver, and tracking work, and around <b>2002</b> into pest-detection dogs — the specialty that would eventually anchor the legacy Kip K9 brand. Each discipline has its own environment and stakes, but each is trained on the same foundation: teach the dog to discriminate, to commit to source, and to tell the truth about what is and isn't there. A trainer who understands behavior rather than memorizing a single odor picture can move across all of it, and that breadth is exactly what lets David build programs and place dogs across such different kinds of work today.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The badge and the bench</div>
+  <h2>A career spent accountable for the outcome.</h2>
+  <p>David attended the police academy in <b>2003</b> and spent the rest of his career in law enforcement, promoted to <b>Chief of Police in 2007</b> before retiring from full-time service in <b>2015</b>. Along the way he graduated from the <b>FBI National Academy</b> at Quantico — the highlight of his law-enforcement career, and a credential that reflects the level at which he was operating. The chief's chair matters to how he teaches: he did not just handle dogs, he was ultimately answerable for a program — for its liability, its documentation, and its performance when someone came looking for a weakness. He has stood where the procurement lead and the K9 supervisor stand, which is why the work here is built backward from the scrutiny an agency actually faces rather than forward from a demo.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Why he writes and testifies</div>
+  <h2>An author on behavior — and an expert witness on reliability.</h2>
+  <p>Today David trains, certifies, consults, and testifies, and he has written extensively on detector-dog behavior and reliability — a manuscript distilled from decades of doing the work. He testifies as an expert witness on detector-dog reliability, always on the basis of honest evaluation; the goal is the truth of what a dog can and cannot tell you, never manufacturing a result or beating the other side. Writing and testifying are two expressions of the same conviction: this discipline improves when it is explained plainly and held to honest scrutiny, and it suffers when it hides behind bravado. He would rather teach a handler to describe a search precisely than watch another team rest a case on "the dog alerted."</p>
+</div></section>
+
 <section class="sec wash"><div class="wrap split">
   <div>
     <div class="eyebrow">The dog behind the name</div>
@@ -1294,6 +1325,29 @@ cert_body = f"""
  </div>
  <div class="card"><h3 class="mt0">Why it wins deals</h3><p class="muted">Agencies and courts don't reward the best adjectives — they reward the best evidence. A documented standard is that evidence.</p><a class="btn dark sm" href="/contact.html">Certify with us</a></div>
 </div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">What it actually tests</div>
+  <h2>Four things, evaluated the way a court would.</h2>
+  <p>A certificate is only as good as what it measures. The LSOC standard is built around the four things that determine whether a team's work will hold up, and it evaluates each of them deliberately rather than trusting a single clean demo.</p>
+  <p><b>Reliability under field-representative conditions.</b> A dog that only performs in a familiar training room has not been tested; it has been rehearsed. The standard puts the team in conditions that resemble the work — the distractions, the environments, the ambiguity of a real search — because that is where reliability either exists or doesn't.</p>
+  <p><b>Independent work, proven by blind and double-blind testing.</b> The single most important question a court will ask is whether the dog was responding to odor or to the handler. The only honest way to answer it is to take the answer away from the handler. Blind and double-blind exercises are therefore not optional flourishes in this standard; they are the core of it, because they are the only thing that separates a reliable dog from a well-cued one.</p>
+  <p><b>Handler communication and articulation.</b> We evaluate the human end of the leash as seriously as the dog. Can the handler run a clean search, keep their own influence out of it, read the dog through the <a href="/method.html">Five Phases</a>, and — critically — describe what the dog did in language that survives cross-examination? A team whose handler cannot explain the behavior is not a certified team; it is a liability with a lanyard.</p>
+  <p><b>Documented, repeatable evaluation — including failure.</b> The standard requires honest records, and honest records include misses. An evaluation history with no failures in it is not evidence of a perfect team; it is evidence of a dishonest process, and a court knows the difference.</p>
+</div></section>
+
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">A benchmark, not a shield</div>
+  <h2>Certification is a floor you can defend — not a guarantee.</h2>
+  <p>It matters what this standard is <i>not</i>. It is not a promise that a dog will never be wrong, and it is not a magic certificate that ends an argument in court. The Supreme Court itself, in <i>Florida v. Harris</i>, rejected the idea that a certificate is an automatic shield: a defendant can still challenge a team's reliability with evidence about training, records, testing, and handler influence. A standard that pretended otherwise would be selling something. Ours does the opposite — it is designed to produce exactly the documentation and demonstrable reliability that answer those challenges, because it was built by someone who has sat in the witness chair and watched thin programs come apart. The point of certifying to it is not to claim perfection. It is to be able to prove, honestly, that a team's work deserves to be trusted. <a href="/resources-florida-v-harris-k9-handlers.html">Read what Harris means for handlers.</a></p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The record is the certificate</div>
+  <h2>Long after the search, the paperwork is what remains.</h2>
+  <p>When a deployment is questioned months or years later, no one re-runs the search. What gets examined is the record — the training logs, the testing history, the maintenance documentation. Certifying to a real standard means building and keeping that record honestly, so that it helps you when it is read aloud instead of handing the other side their best exhibit. That is what "courtroom-defensible" means in practice, and it is the through-line from how we <a href="/method.html">train</a> to how we evaluate to how a team performs when it finally matters.</p>
+</div></section>
+
 <section class="sec tight"><div class="wrap"><div class="eyebrow center">Teams certified to the standard</div>{figure2(CERT_PHOTOS[0], CERT_PHOTOS[1])}</div></section>
 <section class="sec wash"><div class="wrap"><div class="center"><div class="eyebrow">Questions</div><h2>About the standard</h2></div>
 {figure(CERT_PHOTOS[2])}
