@@ -14,13 +14,28 @@ website: a fast, dependency-free static site generated from one Python script.
 
 ```bash
 python3 build.py        # regenerate the whole site into ./public
-python3 validate.py     # must print "VALIDATION PASSED"
+python3 validate.py     # must print "VALIDATION PASSED" (schema + SEO + link gate)
 # preview locally (styles use absolute /paths, so serve over HTTP, not file://):
 cd public && python3 -m http.server 8080   # open http://localhost:8080
 ```
 
 To ship a change: **edit `build.py`** → `python3 build.py` → `python3 validate.py`
 → commit **both** `build.py` and the regenerated `public/` → push. Vercel deploys.
+
+**Images:** `build.py` serves WebP with explicit width/height, read from
+`image-dims.json`. That manifest and the `.webp` files are produced by
+`optimize_images.py` (the *only* script that needs Pillow — dev-only, not part
+of the Vercel build). Run it **only when you add or replace source images**:
+`python optimize_images.py` (converts `public/images/*.jpg` → WebP + rewrites
+`image-dims.json`), then rebuild and commit. `build.py` itself stays
+standard-library only, so Vercel needs no install step.
+
+**`validate.py` is a real gate now** (Keystone Part 9.2): it hard-fails on
+broken links, malformed/incomplete JSON-LD (`@graph` must carry WebSite,
+LocalBusiness, ImageObject, WebPage, BreadcrumbList), >1 or 0 `<h1>`, titles
+over 62 chars or duplicated, meta descriptions outside 110–165, missing
+canonical/`og:image`, or any `<img>` without `alt`. It *warns* (non-blocking)
+on thin body word-count and cross-page duplicate sentences.
 
 ---
 
