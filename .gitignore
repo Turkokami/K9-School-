@@ -19,3 +19,4 @@ node_modules/
 # is deployable even without running the build. build.py regenerates the HTML
 # but never deletes the committed binaries (og.png, favicon.svg, logo.svg,
 # downloads/*.pdf), so those stay tracked.
+.env*
