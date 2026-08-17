@@ -48,7 +48,10 @@ h2{font-size:clamp(1.6rem,3.4vw,2.4rem)}
 h3{font-size:1.22rem}
 p{margin:0 0 1rem}
 a{color:var(--blue);text-decoration:none}
-img{max-width:100%;display:block}
+/* height:auto is load-bearing. Every img carries width/height attributes for CLS;
+   without it the attribute height wins and a 1200x1600 photo renders 1600px tall
+   and squashed to the column width. */
+img{max-width:100%;height:auto;display:block}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 .sec{padding:76px 0}
 .sec.tight{padding:52px 0}
@@ -131,21 +134,26 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .fill{background:#fff6e6;border:1px solid #e6cf9f;color:#8a6417;padding:2px 7px;border-radius:5px;font-size:.86em;font-weight:700}
 
 /* PHOTOS / GALLERY */
-.shot{width:100%;border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow)}
+.shot{width:100%;height:auto;border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow)}
 .shot.tall{aspect-ratio:4/5;object-fit:cover}
+/* Portrait shots are capped by height and centred instead of filling the column,
+   so a single figure can't run past the fold. Nothing is cropped. Containers that
+   crop to a fixed ratio (.gallery, .hero-media, .fig-2) out-specify this. */
+.portrait:not(.tall){max-height:600px;margin-left:auto;margin-right:auto}
+.shot.portrait:not(.tall){width:auto;max-width:100%}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:8px}
 .gallery figure{margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--ink);box-shadow:var(--shadow)}
-.gallery figure img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .35s ease}
+.gallery figure img{width:100%;height:210px;object-fit:cover;object-position:center 32%;display:block;transition:transform .35s ease}
 .gallery figure:hover img{transform:scale(1.05)}
 .gallery figcaption{padding:10px 13px;font-size:.82rem;color:var(--steel);font-weight:600;background:var(--paper)}
 
 /* INLINE CONTENT FIGURES */
-.fig{margin:34px auto;max-width:720px}
-.fig img,.fig-2 img{border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow);width:100%}
+.fig{margin:34px auto;max-width:720px;text-align:center}
+.fig img,.fig-2 img{border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow);width:100%;height:auto}
 .fig figcaption,.fig-2 figcaption{margin-top:8px;font-size:.82rem;color:var(--mute);font-weight:600;text-align:center}
 .fig-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34px auto;max-width:920px}
 .fig-2 figure{margin:0}
-.fig-2 img{aspect-ratio:4/3;object-fit:cover}
+.fig-2 img{aspect-ratio:4/5;object-fit:cover;object-position:center 35%}
 @media(max-width:680px){.fig-2{grid-template-columns:1fr}}
 
 /* STICKY MOBILE CLICK-TO-CALL */
@@ -433,6 +441,12 @@ def img(name, alt, cls="shot", style="", eager=False):
     use = webp if webp in _DIMS else name
     wh = _DIMS.get(use) or _DIMS.get(name)
     dim = f' width="{wh[0]}" height="{wh[1]}"' if wh else ""
+    # Most of the library is portrait phone photos. Tag anything taller than a
+    # comfortable landscape (h/w > 0.84, so portrait *and* near-square) and let the
+    # CSS cap it by height — a 3:4 shot in a 720px column is 960px tall and eats the
+    # whole viewport. 4:3 and wider keep the full column width.
+    if wh and wh[1] / wh[0] > 0.84:
+        cls = (cls + " portrait").strip()
     st = f' style="{style}"' if style else ""
     ld = ' loading="eager" fetchpriority="high"' if eager else ' loading="lazy"'
     return f'<img class="{cls}" src="/images/{use}" alt="{html.escape(alt)}"{dim}{ld} decoding="async"{st}>'
@@ -497,9 +511,11 @@ def figure(item):
     return f'<figure class="fig">{img(fn, cap)}<figcaption>{html.escape(cap)}</figcaption></figure>'
 
 def figure2(a, b):
+    # cls="" on purpose: the pair is cropped to a shared aspect ratio by `.fig-2 img`
+    # so the two columns line up. The `.shot` height cap would fight that.
     return (f'<div class="fig-2">'
-            f'<figure>{img(a[0], a[1])}<figcaption>{html.escape(a[1])}</figcaption></figure>'
-            f'<figure>{img(b[0], b[1])}<figcaption>{html.escape(b[1])}</figcaption></figure></div>')
+            f'<figure>{img(a[0], a[1], cls="")}<figcaption>{html.escape(a[1])}</figcaption></figure>'
+            f'<figure>{img(b[0], b[1], cls="")}<figcaption>{html.escape(b[1])}</figcaption></figure></div>')
 
 # Landscape hero image per page (portrait phone photos crop badly in a wide hero).
 HERO_PHOTOS = {
