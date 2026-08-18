@@ -125,6 +125,26 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .fig-2 img{aspect-ratio:4/5;object-fit:cover;object-position:center 35%}
 @media(max-width:680px){.fig-2{grid-template-columns:1fr}}
 
+/* VIDEO FACADE - poster + play button; the YouTube iframe swaps in on click */
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:22px}
+.vid{margin:0}
+.vid-btn{position:relative;display:block;width:100%;padding:0;border:1px solid var(--line);background:var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;box-shadow:var(--shadow)}
+.vid-btn img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center 35%;display:block;transition:transform .35s ease}
+.vid-btn img.portrait{max-height:none;margin:0}
+.vid-btn:hover img{transform:scale(1.04)}
+.vid-plate{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;background:linear-gradient(150deg,var(--navy) 0%,var(--black) 100%);padding:20px}
+.vid-plate-t{color:#c4d2dd;font-weight:700;font-size:1rem;line-height:1.35;text-align:center}
+.vid-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:rgba(201,162,39,.94);box-shadow:0 6px 20px rgba(0,0,0,.45);transition:background .2s ease}
+.vid-play::after{content:"";position:absolute;left:56%;top:50%;transform:translate(-50%,-50%);border-style:solid;border-width:11px 0 11px 19px;border-color:transparent transparent transparent var(--black)}
+.vid-btn:hover .vid-play{background:var(--gold-l)}
+.vid-btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.vid-dur{position:absolute;right:9px;bottom:9px;background:rgba(8,9,13,.86);color:#fff;font-size:.75rem;font-weight:700;padding:2px 7px;border-radius:4px;font-variant-numeric:tabular-nums}
+.vid figcaption{margin-top:9px;font-size:.84rem;color:var(--mute);line-height:1.45}
+.vid figcaption b{color:var(--ink2)}
+.vid iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:var(--r);display:block;box-shadow:var(--shadow)}
+.vid-more{margin-top:20px;font-size:.86rem;font-weight:700}
+.wash .vid figcaption{color:var(--steel)}
+
 /* STICKY MOBILE CLICK-TO-CALL */
 .callbar{display:none}
 @media(max-width:760px){

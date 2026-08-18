@@ -135,46 +135,44 @@ that come up in Alabama and the Southeast that a handler from elsewhere would no
 
 ---
 
-## Section 5 — Video (revised — we pulled your channel)
+## Section 5 — Video (revised — all 30 videos are now embedded)
 
-We found your channel and read the feed. Fifteen videos, including two you posted on August 17.
-We plan to embed them across the site with proper video markup, which is a search surface almost
-nobody in this industry uses.
+We went through the whole channel, not just the recent uploads. There are **30 public
+videos**, and 27 of them are now embedded on the site with proper video markup, which
+is a search surface almost nobody in this industry uses. The player only loads when
+someone clicks, so the pages stay fast.
 
-Here is what we found and where we would put each one. **Q44: confirm, veto, or re-assign each.**
+Here is where each one landed:
 
-| # | Video | Where we'd put it |
-|---|---|---|
-| 1 | LSOC Promotional Video 2 | Home page hero |
-| 2 | Bella Days 1–7 (edited) | Training page — green dog progression |
-| 3 | Mal puppy 1st day's work on odor | The Method, and the Five Phases article |
-| 4 | Start by building drive, then channel it | The Method |
-| 5 | Handling — Reading a False Alert | Handler-influence article and Certification |
-| 6 | Handling — How Not to Teach a Dog to Go To Source | Five Phases article |
-| 7 | Handling — Minimal Direction & Teaching Source | Five Phases article |
-| 8 | Handling — Good Loose Leash | Handler-influence article |
-| 9 | Handling — Too Much Bending | Handler-influence article |
-| 10 | Handling — Don't Stop in One Place Too Long | Handler-influence article |
-| 11 | Drug Dog Opens Car Door and Gets Dope | Narcotics article and Proof |
-| 12 | Zeus on the boxes | Detection Dogs |
-| 13 | Zeus Long Track in AK | No page for this yet — see Q46 |
-| 14 | Tracking training basics | No page for this yet — see Q46 |
-| 15 | FSI Introduction | About |
+| Page | Videos |
+|---|---|
+| Home | LSOC promotional video |
+| Agencies | Double blind, narrated |
+| Training | Bella, days one through seven |
+| The Method | David describing a search · Build drive then channel it · Malinois puppy first day on odor |
+| Detection Dogs | Zeus on the boxes · Cadaver dog and distractor · Arson dogs · Zeus long track in Alaska · Tracking training basics |
+| About | FSI introduction |
+| Proof | All seven handler testimonials — **see Q66, this one is blocked** |
+| Five Phases guide | How not to teach a dog to go to source · Minimal direction and teaching source |
+| Invisible Leash guide | Reading a false alert · Good loose leash · Too much bending · Do not stop in one place too long · Get in and get out |
+| Narcotics guide | Drug dog opens a car door |
 
-**Q45.** The six "Handling" videos are from 2013. Do they still represent how you teach? If any of
-them show something you have since changed your mind about, tell us — "here is what I filmed in
-2013 and here is what I do now, and why" is a better piece of content than the video alone.
+**Q44.** Look at that table and tell us anything that is in the wrong place, or any video
+you would rather we did not use at all.
 
-**Q46.** Tracking. You have two tracking videos and no tracking page. Do you train and sell tracking
-work? If yes it deserves its own page.
+**Q45.** The six "Handling" clips are from 2013. Do they still represent how you teach?
+If you have changed your mind about any of it, say so — "here is what I filmed in 2013,
+here is what I do now, and why" is a better piece of content than the clip on its own.
 
-**Q47.** Are there more videos than the fifteen public ones — unlisted, private, or sitting on a
-hard drive? Raw field footage is worth more to us than polished footage.
+**Q46.** Tracking. You have two tracking videos and no tracking page. Do you train and
+sell tracking work? If yes it deserves its own page and we will build one.
 
-**Q48.** For each video, one or two sentences on what a viewer should be watching for. This becomes
-the caption and the video description in the markup, and it is what makes the video findable.
+**Q47.** Are there more videos than the 30 public ones — unlisted, private, or sitting on
+a hard drive? Raw field footage is worth more to us than polished footage.
 
----
+**Q48.** For each video, one or two sentences on what a viewer should be watching for. We
+have written placeholder captions from what we can see; your version will be better and
+it is what makes the video findable.
 
 ## Section 6 — The naming decision (revised)
 
@@ -262,3 +260,24 @@ what we write the deep pages from, and they are the difference between a good-lo
 that outranks the volume schools. Section 9 is the checklist we run on cutover day.
 
 Answer what you can, when you can. Section 0 first, then Section 2, then the rest in any order.
+
+---
+
+## Section 10 — Added after we went through the channel (please read)
+
+**Q66. This one blocks a section of the site.** The seven testimonial videos name real
+people on camera: Steven Karaduzovic, Steve Yerger, Nathaniel Levin, Devin Reynolds,
+Rick Chapel, Jonas Wilkey and Mike Hanna. They are already public on your channel, but
+featuring them by name as proof on a commercial site is a stronger claim than a video
+sitting on YouTube. **Do we have your confirmation that we may use their names and
+footage this way?** The section is built and currently carries an amber flag; it does
+not go public until you say yes. If any individual should come out, name them.
+
+**Q67.** Three videos we did not place because we could not tell what they are:
+"Fire scene training" (2013), "Loretta" and "Loretta 2" (2013). What are they, and do
+you want them on the site?
+
+**Q68.** Several videos carry **FSI** branding — "FSI introduction," "FSI K9 seminar,"
+"FSI academy." That is a different name from LSOC. Same question as the K9 Alliance one
+in Section 6: is FSI a former name of this operation, a separate organisation you worked
+with, or something to leave in the past? It changes how we introduce those videos.

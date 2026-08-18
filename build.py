@@ -156,6 +156,26 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .fig-2 img{aspect-ratio:4/5;object-fit:cover;object-position:center 35%}
 @media(max-width:680px){.fig-2{grid-template-columns:1fr}}
 
+/* VIDEO FACADE - poster + play button; the YouTube iframe swaps in on click */
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:22px}
+.vid{margin:0}
+.vid-btn{position:relative;display:block;width:100%;padding:0;border:1px solid var(--line);background:var(--ink);border-radius:var(--r);overflow:hidden;cursor:pointer;box-shadow:var(--shadow)}
+.vid-btn img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center 35%;display:block;transition:transform .35s ease}
+.vid-btn img.portrait{max-height:none;margin:0}
+.vid-btn:hover img{transform:scale(1.04)}
+.vid-plate{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;background:linear-gradient(150deg,var(--navy) 0%,var(--black) 100%);padding:20px}
+.vid-plate-t{color:#c4d2dd;font-weight:700;font-size:1rem;line-height:1.35;text-align:center}
+.vid-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:rgba(201,162,39,.94);box-shadow:0 6px 20px rgba(0,0,0,.45);transition:background .2s ease}
+.vid-play::after{content:"";position:absolute;left:56%;top:50%;transform:translate(-50%,-50%);border-style:solid;border-width:11px 0 11px 19px;border-color:transparent transparent transparent var(--black)}
+.vid-btn:hover .vid-play{background:var(--gold-l)}
+.vid-btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.vid-dur{position:absolute;right:9px;bottom:9px;background:rgba(8,9,13,.86);color:#fff;font-size:.75rem;font-weight:700;padding:2px 7px;border-radius:4px;font-variant-numeric:tabular-nums}
+.vid figcaption{margin-top:9px;font-size:.84rem;color:var(--mute);line-height:1.45}
+.vid figcaption b{color:var(--ink2)}
+.vid iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:var(--r);display:block;box-shadow:var(--shadow)}
+.vid-more{margin-top:20px;font-size:.86rem;font-weight:700}
+.wash .vid figcaption{color:var(--steel)}
+
 /* STICKY MOBILE CLICK-TO-CALL */
 .callbar{display:none}
 @media(max-width:760px){
@@ -241,6 +261,20 @@ document.addEventListener('DOMContentLoaded',function(){
   // reflect chosen audience in hidden field label if present
   document.querySelectorAll('input[name="inquiry_type"]').forEach(function(r){
     r.addEventListener('change',function(){});
+  });
+  // Video facade: swap the poster for a real player only when asked. Nothing from
+  // youtube.com is requested until this fires, so the page stays light.
+  document.addEventListener('click',function(e){
+    var b=e.target.closest?e.target.closest('.vid-btn'):null;
+    if(!b) return;
+    var id=b.getAttribute('data-yt'); if(!id) return;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.title=b.getAttribute('aria-label')||'Video';
+    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.referrerPolicy='strict-origin-when-cross-origin';
+    f.setAttribute('allowfullscreen','');
+    b.parentNode.replaceChild(f,b);
   });
 });
 """
@@ -349,6 +383,7 @@ def page(slug, title, desc, body, nodes=None, active=None, canonical=None, crumb
     graph = [_website_node(), _localbusiness_node(), _logo_node(),
              _webpage_node(canonical, title, desc), _breadcrumb_node(canonical, crumbs)]
     graph += [n for n in (nodes or []) if n]
+    graph += video_nodes(slug, canonical)
     schema_block = ('<script type="application/ld+json">'
                     '{"@context":"https://schema.org","@graph":[' + ",".join(graph) + ']}</script>')
     # AEO Quick Answer (Keystone Block #1): inject after the hero, hooked for Speakable
@@ -647,6 +682,154 @@ ARTICLE_PHOTOS = {
 }
 
 # Reusable callout for David's forthcoming book (purchase link added later)
+# ---------- VIDEO (David's YouTube channel) ----------
+# Facade embeds: a self-hosted poster + play button. The YouTube iframe and its
+# ~1MB of player JS load only on click, so the performance gate survives. Upload
+# dates and durations are the real values read off the channel - VideoObject
+# fields are never guessed. VIDEOS holds all 30 public videos; VIDEO_PAGES decides
+# what is placed where and drives BOTH the markup and the schema, so the rendered
+# block and the graph cannot drift apart.
+YT_CHANNEL = "https://www.youtube.com/@alfirek9"
+
+# id: (display title, upload date, seconds, poster image or None, caption)
+VIDEOS = {
+ "X4S-qg_rRj4": ("LSOC promotional video", "2026-08-17", 47, "lsoc-124-training-day-patrol-cars.jpg",
+   "Who we are and the standard we train to."),
+ "9kyLVQTYVgg": ("Bella, days one through seven", "2026-08-17", 302, "lsoc-66-dog-and-mari.jpg",
+   "A green dog's first week, start to finish."),
+ "G9FgEWuuEIo": ("Zeus, long track in Alaska", "2023-12-03", 202, "lsoc-79-tracking-team-in-ak.jpg",
+   "A long track worked in open country."),
+ "jegeVYJh5N8": ("Tracking training basics", "2023-11-22", 200, "lsoc-54-tracking-dog-class.jpg",
+   "How a tracking problem is laid and then worked."),
+ "xouG9aoSAaQ": ("Drug dog opens a car door and gets to source", "2023-11-13", 45, "lsoc-78-mal-sniffing-car.jpg",
+   "Independent work. The dog solves the access problem itself."),
+ "2m4PP_SM154": ("Zeus on the boxes", "2023-07-14", 60, "lsoc-28-dexter-on-car.jpg",
+   "Box work, discrimination and source commitment."),
+ "8CnyvXSHqUw": ("Build drive first, then channel it", "2023-07-14", 61, "lsoc-131-wal-mounted-ball-droppers.jpg",
+   "Drive is the engine. Watch what it gets aimed at."),
+ "G50kgkz4hr4": ("Malinois puppy, first day on odor", "2023-02-03", 61, "lsoc-47-josh-and-aki.jpg",
+   "How a detector dog is started on odor."),
+ "QBof9goDcUA": ("FSI introduction", "2014-02-16", 127, "lsoc-7-me-na.jpg",
+   "An earlier program David built and ran."),
+ "OoZAgXv9EPI": ("Handling, good loose leash", "2013-11-24", 69, "lsoc-101-lab-straining-at-leash.jpg",
+   "What the leash should be doing, and what it should not."),
+ "C1TuYB0zMqM": ("Handling, too much bending", "2013-11-24", 13, "lsoc-103-lab-strains-on-leash.jpg",
+   "Handler posture working as an unintended cue."),
+ "ChiIklfwuiE": ("Handling, reading a false alert", "2013-11-24", 17, "lsoc-102-lab-alerts.jpg",
+   "The response happens. The behavior before it tells you why."),
+ "iLyVej-TRqI": ("Handling, minimal direction and teaching source", "2013-11-24", 58, "lsoc-95-dog-points-to-odor.jpg",
+   "Letting the dog solve it instead of steering it."),
+ "kpm41NdRBmg": ("Handling, how not to teach a dog to go to source", "2013-11-24", 33, "lsoc-122-dog-reaching-for-source.jpg",
+   "A common error, shown rather than described."),
+ "s2Vmdx5ryQU": ("Handling, do not stop in one place too long", "2013-11-24", 14, "lsoc-105-lab-saeching-for-source.jpg",
+   "Pausing at a spot tells the dog something you did not mean to say."),
+ "XXgvWsE8MjA": ("Handling, get in and get out", "2013-11-24", 87, "lsoc-104-lab-freeze-alert.jpg",
+   "Presenting an area without contaminating it."),
+ "XwsecmvVnz4": ("Fire scene training", "2013-11-15", 140, None, "Accelerant work on a training burn."),
+ "1hAz4CbobEI": ("Arson dogs", "2013-06-28", 76, "lsoc-52-arson-dog-team.jpg",
+   "Accelerant detection, where David started in 1999."),
+ "VYtCQ3wnUbM": ("Loretta", "2013-05-27", 96, None, "Training footage."),
+ "Z-qdXjkgqME": ("Loretta, part two", "2013-05-27", 136, None, "Training footage."),
+ "LT_eGPMY9Go": ("David Latimer describing a search", "2013-03-26", 444, "lsoc-27-me-skeptical.jpg",
+   "Seven minutes on how a search should actually be read."),
+ "Ai3v9fhGhdU": ("Double blind, narrated", "2013-03-18", 439, "lsoc-130-scent-board.jpg",
+   "A blind test run and explained as it happens."),
+ "fJxvo_tiPxg": ("Cadaver dog and distractor", "2013-03-13", 357, "lsoc-56-delmetrius-and-yance.jpg",
+   "Working target odor against a competing distractor."),
+ "HukdZexYIyM": ("Steven Karaduzovic", "2013-02-25", 75, None, "Handler testimonial."),
+ "Vri7hMSJBic": ("Steve Yerger, explosives and bed bug detection", "2013-02-24", 88, None, "Seminar testimonial."),
+ "UoZzwuJRJRg": ("Nathaniel Levin, one week of K9 training", "2013-02-24", 30, None, "Academy testimonial."),
+ "Bx6V542uOP0": ("Devin Reynolds", "2013-02-24", 36, None, "Handler testimonial."),
+ "By-pe2vxckQ": ("Rick Chapel, Tennessee", "2013-02-24", 31, None, "Handler testimonial."),
+ "uGHDToZpcGM": ("Jonas Wilkey", "2013-02-24", 47, None, "Handler testimonial."),
+ "elujMHiMWss": ("Mike Hanna", "2013-02-24", 40, None, "Handler testimonial."),
+}
+
+# slug: (eyebrow, heading, sub, [video ids], wash background)
+VIDEO_PAGES = {
+ "index.html": ("Watch", "See the work.", "", ["X4S-qg_rRj4"], False),
+ "agencies.html": ("Watch", "A blind test, run and narrated.",
+   "Blind testing is what separates a defensible record from a hopeful one. Here is one, start to finish.",
+   ["Ai3v9fhGhdU"], False),
+ "training.html": ("Watch", "A green dog's first week.",
+   "Days one through seven with Bella, and what actually changes day by day.", ["9kyLVQTYVgg"], False),
+ "method.html": ("Watch", "The method, on film.",
+   "Behavior is easier to see than to describe. These are David's own training clips.",
+   ["LT_eGPMY9Go", "8CnyvXSHqUw", "G50kgkz4hr4"], True),
+ "detection-dogs.html": ("Watch", "The disciplines, working.",
+   "Narcotics, cadaver, accelerant and tracking. The same field-first approach across every one.",
+   ["2m4PP_SM154", "fJxvo_tiPxg", "1hAz4CbobEI", "G9FgEWuuEIo", "jegeVYJh5N8"], True),
+ "about.html": ("Watch", "An earlier program.", "", ["QBof9goDcUA"], False),
+ "proof.html": ("Watch", "Handlers, in their own words.",
+   "Filmed during earlier seminars and academies. Nothing here is scripted.",
+   ["HukdZexYIyM", "Vri7hMSJBic", "UoZzwuJRJRg", "Bx6V542uOP0", "By-pe2vxckQ", "uGHDToZpcGM", "elujMHiMWss"], True),
+ "resources-five-phases-detector-dog-behavior.html": ("Watch", "The phases, on film.", "",
+   ["kpm41NdRBmg", "iLyVej-TRqI"], False),
+ "resources-handler-influence-invisible-leash.html": ("Watch", "Handler influence, shown.",
+   "Five short clips. In each one you can watch the dog answer something the handler did not mean to say.",
+   ["ChiIklfwuiE", "OoZAgXv9EPI", "C1TuYB0zMqM", "s2Vmdx5ryQU", "XXgvWsE8MjA"], False),
+ "resources-narcotics-detection-k9s.html": ("Watch", "Independent work on a vehicle.", "",
+   ["xouG9aoSAaQ"], False),
+}
+
+def _iso_dur(sec):
+    m, s2 = divmod(int(sec), 60)
+    return "PT%dM%dS" % (m, s2) if m else "PT%dS" % s2
+
+def video(vid):
+    title, date, secs, poster, cap = VIDEOS[vid]
+    m, s2 = divmod(secs, 60)
+    label = html.escape("Play video: " + title)
+    if poster:
+        media = img(poster, title + " - video still", cls="vid-poster")
+    else:
+        media = '<span class="vid-plate"><span class="vid-plate-t">%s</span></span>' % html.escape(title)
+    return ('<figure class="vid">'
+            '<button class="vid-btn" type="button" data-yt="%s" aria-label="%s">'
+            '%s<span class="vid-play" aria-hidden="true"></span>'
+            '<span class="vid-dur">%d:%02d</span></button>'
+            '<figcaption><b>%s</b><br>%s</figcaption></figure>'
+            % (vid, label, media, m, s2, html.escape(title), html.escape(cap)))
+
+def video_strip(slug):
+    """Render the video block for a page. Empty string when the page has none."""
+    v = VIDEO_PAGES.get(slug)
+    if not v:
+        return ""
+    eyebrow, heading, sub, ids, wash = v
+    subp = '<p class="lead" style="max-width:64ch">%s</p>' % sub if sub else ""
+    note = ""
+    if slug == "proof.html":
+        # These are real named people filmed under the earlier FSI brand. Do not
+        # publish the section until David confirms we may use their names.
+        note = ('<p class="lead" style="max-width:64ch">'
+                + fill("confirm we may feature these handlers by name") + '</p>')
+    grid = "".join(video(i) for i in ids)
+    cls = "sec tight wash" if wash else "sec tight"
+    return ('<section class="%s"><div class="wrap">'
+            '<div class="eyebrow">%s</div><h2>%s</h2>%s%s'
+            '<div class="vid-grid">%s</div>'
+            '<p class="vid-more"><a href="%s" rel="noopener">More video on the channel</a></p>'
+            '</div></section>' % (cls, eyebrow, heading, subp, note, grid, YT_CHANNEL))
+
+def video_nodes(slug, canonical):
+    v = VIDEO_PAGES.get(slug)
+    if not v:
+        return []
+    out = []
+    for vid in v[3]:
+        title, date, secs, poster, cap = VIDEOS[vid]
+        thumb = (SITE + "/images/" + poster.rsplit(".", 1)[0] + ".webp") if poster else SITE + "/og.png"
+        out.append('{"@type":"VideoObject",'
+            '"@id":"%s#video-%s","name":%s,"description":%s,'
+            '"uploadDate":"%s","duration":"%s","thumbnailUrl":"%s",'
+            '"contentUrl":"https://www.youtube.com/watch?v=%s",'
+            '"embedUrl":"https://www.youtube-nocookie.com/embed/%s",'
+            '"publisher":{"@id":"%s/#localbusiness"},"isPartOf":{"@id":"%s#webpage"}}'
+            % (canonical, vid, _json(title), _json(cap), date, _iso_dur(secs), thumb,
+               vid, vid, SITE, canonical))
+    return out
+
 def book_callout():
     return f"""
 <div class="card" style="border-left-color:var(--gold);background:var(--wash2)">
@@ -855,6 +1038,8 @@ home_body = f"""
 
 {photostrip(HOME_PHOTOS, heading="One standard, many missions.", sub="Narcotics, bed bug, arson, tracking and more — the same field-first approach across every discipline.", wash=True)}
 
+{video_strip("index.html")}
+
 <section class="sec">
   <div class="wrap">
     <div class="center"><div class="eyebrow">Common questions</div><h2>Straight answers</h2></div>
@@ -908,6 +1093,8 @@ def hub(slug, cls, eyebrow, h1, sub, cta_label, cta_href, proof_items, offer_htm
 </section>
 
 {deep}
+
+{video_strip(slug)}
 
 <section class="sec">
   <div class="wrap"><div class="center"><div class="eyebrow">Before you decide</div><h2>The questions you're already asking</h2></div>
@@ -1291,12 +1478,7 @@ proof_body = f"""
   </div>
 </div></section>
 
-<section class="sec"><div class="wrap">
-  <div class="split">
-   <div><div class="eyebrow">Watch</div><h2>See the work.</h2><p class="lead">Training and deployment footage tells the story words can't.</p><p class="muted">{fill('Embed YouTube videos from the existing channel.')}</p></div>
-   <div class="ph" style="min-height:240px">Video embed<br>{fill('YouTube embed')}</div>
-  </div>
-</div></section>
+{video_strip("proof.html")}
 
 <section class="sec tight"><div class="wrap"><div class="ctastrip">
   <h2>Want references for your specific use case?</h2>
@@ -1338,6 +1520,7 @@ about_body = f"""
 </div></section>
 
 <section class="sec tight"><div class="wrap">{figure2(("lsoc-136-me-and-two-search-dogs-2.jpg","In the field with the dogs"), ("lsoc-73-me-and-handler-trng.jpg","Working alongside a handler"))}</div></section>
+{video_strip("about.html")}
 
 <section class="sec"><div class="wrap" style="max-width:820px">
   <div class="eyebrow">It started with Sport</div>
@@ -1539,6 +1722,7 @@ def article(slug, kicker, title, desc, intro, sections, cta_head, cta_sub, cta_l
   {body_sections}
   {faq_block}
 </div></section>
+{video_strip(slug)}
 <section class="sec tight"><div class="wrap" style="max-width:900px"><div class="ctastrip">
   <h2>{cta_head}</h2><p>{cta_sub}</p>
   <a class="btn" href="{cta_href}">{cta_label}</a>
@@ -2013,6 +2197,7 @@ method_body = f"""
 </div></section>
 
 <section class="sec tight"><div class="wrap"><div class="eyebrow center">The Scent Board System</div>{figure2(("lsoc-109-dog-sniffing-bd-3.jpg","Discrimination and source commitment on the board"), ("lsoc-98-bedbug-dog-working-board.jpg","Working a detection problem"))}</div></section>
+{video_strip("method.html")}
 
 <section class="sec"><div class="wrap"><div class="center"><div class="eyebrow">Questions</div><h2>About the method</h2></div>
 <div style="max-width:820px;margin:28px auto 0">{faq_html(method_faq)}</div></div></section>
