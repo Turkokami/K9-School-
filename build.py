@@ -332,6 +332,38 @@ def _json(s): return json.dumps(s, ensure_ascii=False)
 # ---------- 7-node schema graph (Keystone Part 5.1): built once, per page ----------
 SPEAKABLE = '"speakable":{"@type":"SpeakableSpecification","cssSelector":[".quick-answer",".faq"]}'
 
+# ---------- CITED RESEARCH ----------
+# Published work the method actually rests on. Cited properly rather than
+# paraphrased as "studies show": an answer engine is materially more likely to
+# quote a page that sources real research, and a defense attorney is materially
+# less likely to dent one.
+STUDIES = {
+ "lit2011": (
+   "Handler beliefs affect scent detection dog outcomes",
+   ["Lisa Lit", "Julie B. Schweitzer", "Anita M. Oberbauer"],
+   "2011", "Animal Cognition",
+   "https://doi.org/10.1007/s10071-010-0373-2"),
+}
+
+# slug -> study keys
+CITATIONS = {
+ "method.html": ["lit2011"],
+ "resources-handler-influence-invisible-leash.html": ["lit2011"],
+}
+
+def _citation_ids(slug):
+    return [f"{SITE}/#study-{k}" for k in CITATIONS.get(slug, [])]
+
+def _citation_nodes(slug):
+    out = []
+    for k in CITATIONS.get(slug, []):
+        name, authors, year, journal, url = STUDIES[k]
+        auth = ",".join('{"@type":"Person","name":%s}' % _json(a) for a in authors)
+        out.append('{"@type":"ScholarlyArticle","@id":"%s/#study-%s","name":%s,'
+                   '"author":[%s],"datePublished":"%s","isPartOf":{"@type":"Periodical","name":%s},"url":"%s"}'
+                   % (SITE, k, _json(name), auth, year, _json(journal), url))
+    return out
+
 def _website_node():
     return (f'{{"@type":"WebSite","@id":"{SITE}/#website","url":"{SITE}/",'
             f'"name":{_json(BIZ)},"publisher":{{"@id":"{SITE}/#localbusiness"}}}}')
@@ -350,12 +382,13 @@ def _localbusiness_node():
       '"description":"Operational detection dog training, handler and instructor certification, program consulting, and placement-ready detection dogs for law enforcement, conservation, and private detection teams.",'
       '"knowsAbout":["detection dog training","narcotics detection","explosives detection","arson accelerant detection","bed bug detection","conservation detection","handler certification","K9 program development"]}')
 
-def _webpage_node(canonical, title, desc):
+def _webpage_node(canonical, title, desc, cites=()):
+    cite = (',"citation":[' + ",".join('{"@id":"%s"}' % c for c in cites) + ']') if cites else ''
     return (f'{{"@type":"WebPage","@id":"{canonical}#webpage","url":"{canonical}",'
             f'"name":{_json(title)},"description":{_json(desc)},'
             f'"isPartOf":{{"@id":"{SITE}/#website"}},"about":{{"@id":"{SITE}/#localbusiness"}},'
             f'"primaryImageOfPage":{{"@id":"{SITE}/#logo"}},'
-            f'"breadcrumb":{{"@id":"{canonical}#breadcrumb"}},{SPEAKABLE}}}')
+            f'"breadcrumb":{{"@id":"{canonical}#breadcrumb"}},{SPEAKABLE}{cite}}}')
 
 def _breadcrumb_node(canonical, crumbs):
     items = ",".join(
@@ -381,7 +414,9 @@ def page(slug, title, desc, body, nodes=None, active=None, canonical=None, crumb
         else:
             crumbs = [("Home", f"{SITE}/"), (page_name, canonical)]
     graph = [_website_node(), _localbusiness_node(), _logo_node(),
-             _webpage_node(canonical, title, desc), _breadcrumb_node(canonical, crumbs)]
+             _webpage_node(canonical, title, desc, _citation_ids(slug)),
+             _breadcrumb_node(canonical, crumbs)]
+    graph += _citation_nodes(slug)
     graph += [n for n in (nodes or []) if n]
     graph += video_nodes(slug, canonical)
     schema_block = ('<script type="application/ld+json">'
@@ -461,7 +496,7 @@ QUICK_ANSWERS = {
  "resources-narcotics-detection-k9s.html": "A narcotics detection K9 is an evidentiary tool as much as an operational one. Reliability is a legal question — courts scrutinize training, certification, and maintenance records — so build the paper trail from day one, test blind to prove the dog works odor and not the handler, and train handlers to describe behavior.",
  "resources-bed-bug-detection-dogs.html": "For pest control, a bed bug detection dog is a revenue and reputation decision: a reliable dog inspects a room in minutes, opens a premium service line, and wins commercial accounts. Accuracy comes from the whole team and its maintenance — and an honest dog that clears a clean room protects your brand.",
  "resources-explosives-detection-k9.html": "Explosives detection is the discipline with the least room for error, so selection, training, and maintenance standards run higher. Operational reliability means the team performs in realistic environments and works independently, proven by blind testing — never a claim of 100% accuracy, which no honest trainer makes.",
- "resources-five-phases-detector-dog-behavior.html": "The Five Phases of detector-dog behavior are: responds to the search command, systematic search, detection, change of behavior, and trained final response. Phases three and four are the investigation — where the dog actually solves the problem — and naming them lets a handler observe, document, and testify precisely.",
+ "resources-five-phases-detector-dog-behavior.html": "The Latimer Five-Phase Model describes a detector-dog search as: responds to the search command, systematic search, detection, change of behavior, and trained final response. Phases three and four are the investigation — where the dog actually solves the problem — and naming them lets a handler observe, document, and testify precisely.",
  "resources-florida-v-harris-k9-handlers.html": "Florida v. Harris (2013) holds that a detector dog's reliability is judged by the totality of the circumstances, not a rigid checklist — training and certification matter, but the defense can still challenge them. A certificate is a benchmark, not a magic shield; honest records and blind testing are what hold up.",
  "resources-handler-influence-invisible-leash.html": "The Invisible Leash is unconscious handler influence — the physical, visual, verbal, and emotional cues a dog reads from the person on the leash, as the Clever Hans case and Dr. Lisa Lit's research show. Honest teams don't deny it; they manage it and audit for it with blind and double-blind testing.",
 }
@@ -1920,10 +1955,13 @@ article("resources-explosives-detection-k9.html",
 # --- Guide 7: five phases ---
 article("resources-five-phases-detector-dog-behavior.html",
   "Method Guide",
-  "The Five Phases of Detector Dog Behavior",
-  "The behavioral sequence every detector-dog search moves through — and why naming it changes how handlers observe, document, and testify.",
+  "Latimer Five-Phase Model of Detector Dog Behavior",
+  "A working model of the behavioral sequence a detector-dog search moves through — and why naming it changes how handlers observe, document, and testify.",
   "The sit gets all the attention. But by the time a dog performs its trained final response, the important work is already done. Understanding the search as a sequence of phases lets a handler see the investigation as it happens — and describe it accurately later.",
   [
+   ("Where this model comes from, and what it is not",
+    ["This is a working model, and it is worth saying so plainly. Research on detection dogs supports the pieces it is built from: that behavior occurring before the trained response carries usable information, and that dogs measurably change how they move as they localise a source. What no published study has yet done is validate that every search divides into these exact five phases, or that two observers watching the same dog would draw the boundaries in the same place.",
+     "So this is the Latimer Five-Phase Model — a framework built in the field over twenty-five years, consistent with the research but not a finding of it. That distinction matters more here than in most training material. A handler who testifies that the dog moved through &ldquo;the five scientifically established phases of canine detection&rdquo; has handed the other side an easy afternoon. A handler who says &ldquo;I use a five-phase framework to describe what I observed, and here is what the dog actually did&rdquo; is describing evidence, and is much harder to move."]),
    ("Why phases instead of just “the alert”",
     ["A detector dog doesn't recognize odor at the instant it sits. Recognition happens earlier, and the dog's behavior changes as it works the problem. Breaking the search into phases gives handlers a shared, precise language for what the dog is doing — instead of collapsing an entire investigation into one word: &ldquo;alerted.&rdquo;"]),
    ("The five phases",
@@ -1991,7 +2029,8 @@ article("resources-handler-influence-invisible-leash.html",
    ("The Clever Hans lesson",
     ["A century ago, a horse called Clever Hans appeared to do arithmetic — until researchers showed he was reading tiny, unconscious cues from the people around him. Detector dogs are at least as sensitive. When a handler expects an alert, the dog can find one, whether or not odor is present."]),
    ("What the research shows",
-    ["Studies — including Dr. Lisa Lit's well-known work — have demonstrated that handler beliefs can shape a dog's responses, producing errors that track the handler's expectations rather than the presence of target odor. This isn't an attack on handlers; it's a description of how sensitive these teams are."]),
+    ["The clearest demonstration is Lit, Schweitzer and Oberbauer (2011), published in <i>Animal Cognition</i>. Eighteen certified law-enforcement narcotics and explosives teams searched rooms that contained no target odor at all. Handlers were told scent might be present, and in some conditions that paper markers showed where. Across 164 searches the teams produced 225 incorrect alerts, and those alerts clustered at the locations the handlers believed held odor. The handlers' beliefs moved the results more than anything the dogs were reacting to.",
+     "Be precise about what that proves, because overstating it is its own trap. It does not mean handlers cue dogs into false alerts every time, and later work has found the size of the effect depends heavily on how strongly the handler believes and how the test is run. Some of the effect is also the handler reading ambiguity as an alert because they expected one — influence running dog-to-handler rather than handler-to-dog. Both directions are the same problem for a court: the record shows an alert that odor did not cause. This isn't an attack on handlers. It's a description of how sensitive these teams are, and why the fix is structural rather than a matter of trying harder."]),
    ("Four channels of influence",
     ["UL:<b>Physical</b> — leash tension, body position, slowing at a spot.|<b>Visual</b> — a glance, a lean, a change in posture.|<b>Verbal</b> — tone and timing of encouragement.|<b>Emotional</b> — the handler's own anticipation traveling down the leash."]),
    ("Why the dog isn't cheating",
@@ -2069,9 +2108,24 @@ method_body = f"""
   <p>What follows is how we build it. None of it is proprietary magic. It is a way of seeing, a vocabulary for what you see, and a discipline for proving it later. Read it as an operator, because that is who it was written for.</p>
 </div></section>
 
+<section class="sec wash"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">The system</div>
+  <h2>The Latimer Detector Dog System</h2>
+  <p class="lead">The method has a name because it makes specific, checkable claims. We call the approach <b>Behavior-First Detection</b>: the dog's observable behavior — not the handler's expectation, not the reward history, not the certificate — is the evidence that detection occurred. {fill('confirm the exact protected wording and whether a trademark applies')}</p>
+  <p>Everything else follows from that one commitment. If behavior is the evidence, then the handler has to be able to read it, which is why the <a href="/resources-five-phases-detector-dog-behavior.html">Five-Phase Model</a> is taught before anything else. If behavior is the evidence, then the dog has to produce that behavior on its own, which is why independent source commitment matters more to us than a tidy sit. And if behavior is the evidence, then the training has to be run so that the handler's knowledge cannot contaminate it, which is why blind and double-blind work is a standing practice here rather than an annual test.</p>
+  <p>The division of labour we teach is narrower than &ldquo;the dog should work independently,&rdquo; and it is the sentence worth remembering: <b>the handler controls the search assignment; odor controls the detection decision.</b> A dog that will not take direction is not an operational dog. A dog whose final response is directed by anything other than odor is not a reliable one. Both halves have to be true at once.</p>
+</div></section>
+
+<section class="sec"><div class="wrap" style="max-width:820px">
+  <div class="eyebrow">Odor science</div>
+  <h2>The dog is smelling vapor, not objects.</h2>
+  <p>A detector dog never smells &ldquo;the narcotics&rdquo; or &ldquo;the explosive.&rdquo; It smells volatile compounds coming off a source and moving through air that is doing whatever the building, the weather, and the traffic tell it to do. That sounds academic until it changes a search: it is why source can be six feet from where the odor is strongest, why an inaccessible source produces a dog that will not settle, why residual odor exists at all, and why a handler who does not understand air movement will misread an honest dog.</p>
+  <p>Treating odor as a physical thing with physics — rather than a magic power the dog possesses — is what makes the rest of the method teachable. It is also what makes a handler's testimony credible: a witness who can explain why the dog worked a seam thirty inches to the left of the source is a witness who understands the work. {fill('confirm we may name Dr. Larry Myers (Auburn) and describe the collaboration')}</p>
+</div></section>
+
 <section class="sec wash"><div class="wrap">
-  <div class="center"><div class="eyebrow">Framework</div><h2>The Five Phases of Detector Dog Behavior</h2>
-  <p class="lead" style="max-width:60ch;margin:12px auto 0">Every search moves through the same sequence. Naming the phases lets a handler observe, document, and testify precisely.</p></div>
+  <div class="center"><div class="eyebrow">Framework</div><h2>The Latimer Five-Phase Model</h2>
+  <p class="lead" style="max-width:60ch;margin:12px auto 0">A working model for reading a search, built in the field over twenty-five years. Naming the phases lets a handler observe, document, and testify precisely.</p></div>
   <div class="grid g3" style="margin-top:30px;text-align:left">
     <div class="card"><div class="ic">1</div><h3>Responds to the search command</h3><p>The dog begins working on cue.</p></div>
     <div class="card"><div class="ic">2</div><h3>Systematic search</h3><p>Working the area — no target odor recognized yet.</p></div>
