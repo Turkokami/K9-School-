@@ -889,6 +889,90 @@ def video_nodes(slug, canonical):
 # of the Tatsa story is that he calls his own explanation a hypothesis rather than
 # a finding. Schema is honest CreativeWork: no ratings, no invented dates.
 CASE_STUDIES = {
+ "lucy-and-the-baby-doll": dict(
+   kicker="Case study — explosives",
+   title="The box Lucy cleared, and the squad blew up anyway",
+   photo=None,
+   dog="Lucy",
+   discipline="Explosives detection",
+   outcome="No explosive odor present. The dog was right; the decision went the other way.",
+   body=[
+     "After Boomer passed away I started training my wife's Border Collie, Lucy, on explosives. She "
+     "took to it almost immediately, and before long we were training regularly with the bomb squad "
+     "from a larger department. Those men were professionals who believed training should be as "
+     "realistic as possible. Their commander built scenarios that forced the team to think like "
+     "investigators rather than technicians — evaluate the evidence, make a decision, solve the "
+     "problem under conditions that looked like a real call.",
+
+     "One exercise has stayed with me ever since. A cardboard box had been left at the entrance to a "
+     "shopping center before opening, reported by patrol after a bomb threat. The centre was closed, "
+     "so the squad had the whole property to work with. They approached the box, elected not to X-ray "
+     "it, and decided to deploy Lucy to find out whether explosive odor was present.",
+
+     "I gave her the command to search. The box was the only object in the area, so of course it drew "
+     "her. She worked it thoroughly, every side. I watched for the behavior that always came before "
+     "her trained final response when she was in odor. It never came. No increase in interest. No "
+     "change in breathing. No increased focus. No source commitment. She satisfied her curiosity, "
+     "left the box, and carried on searching the area around it. She had run the problem and reached "
+     "a conclusion. It just was not the conclusion the humans expected.",
+
+     "After a few minutes I called her back and reported that Lucy found no indication of explosive "
+     "odor. For reasons I have never fully understood, the decision was made to proceed as though a "
+     "device was inside anyway. A water cannon was brought up, the stand-off distance calculated, the "
+     "operators careful and methodical and entirely professional. Then they fired. The box came apart "
+     "and a life-sized plastic baby doll bounced across the parking lot.",
+
+     "Nobody said anything for a moment. The exercise had never been about destroying a suspicious "
+     "package. It was about making a sound decision on the available evidence. By that standard the "
+     "team failed. Lucy did not. She investigated, evaluated, reached a conclusion and moved on. She "
+     "never hesitated, never guessed, and never changed her answer because experienced people believed "
+     "something different.",
+
+     "That is what <i>Credo Vestri Canis</i> means to me. Trust your dog.",
+   ],
+   takeaway="A trained dog reporting no odor is information, not the absence of information. If you "
+            "only believe the dog when it says yes, you do not actually have a detection capability — "
+            "you have a device that confirms what you already thought.",
+ ),
+ "boomer-and-contamination": dict(
+   kicker="Case study — the failure that changed the method",
+   title="The bullet Boomer could not find",
+   photo=None,
+   dog="Boomer",
+   discipline="Explosives detection",
+   outcome="A public failure that exposed what the dog had actually been trained on",
+   body=[
+     "Boomer was my first explosives dog and he taught me more than any dog since. One thing he did "
+     "looked genuinely impressive: he could find a single round of ammunition, fast. I ran that demo "
+     "many times. Pop the magazine out of my Glock, take out a round, toss it into grass or somewhere "
+     "it was out of sight, send Boomer, and within a few minutes he would be sitting and pointing his "
+     "nose at it. It never failed.",
+
+     "Then one day another officer and I were at a gathering with a lot of other police there. I had "
+     "Boomer with me for socialisation. My colleague wanted to show people what the dog could do, so "
+     "he popped a round out of <b>his</b> Glock and threw it into a grassy area. I sent Boomer and he "
+     "engaged hard, sniffing, working. I had no reason to think he would not be sitting on it within "
+     "the minute.",
+
+     "The minutes went by. It became obvious he was not going to find it. That was one of the most "
+     "humbling things that has happened to me in this work, and it happened in front of a crowd of "
+     "cops.",
+
+     "I thought about it for a long time afterwards, mostly because I never wanted it to happen again. "
+     "I knew dogs could find ammunition, so something was wrong, and I suspected the something was me. "
+     "It was. Eventually it dawned on me what had actually been going on. Boomer was not finding a "
+     "bullet. He was finding an object that carried the odor of my hands. Every round I had ever "
+     "thrown had been handled by me first.",
+
+     "That taught me three things I have never let go of. Human odor is enormously strong to a dog. A "
+     "dog can tell one person's odor from another's. And a training set-up can quietly teach a dog "
+     "something completely different from what you believe you are teaching it, while producing "
+     "results that look like success every single time.",
+   ],
+   takeaway="For months I thought I had a dog that could find ammunition. What I actually had was a "
+            "dog that could find me. That is what stimulus control means, and it is why we test for it "
+            "rather than assume it.",
+ ),
  "tatsa-cleared-vehicle": dict(
    kicker="Case study — narcotics",
    title="The find another dog had already cleared",
@@ -929,12 +1013,16 @@ CASE_STUDIES = {
 def case_study(key, flagged=""):
     c = CASE_STUDIES[key]
     paras = "".join(f"<p>{t}</p>" for t in c["body"])
-    fn, cap = c["photo"]
+    fig = ""
+    if c.get("photo"):
+        fn, cap = c["photo"]
+        fig = (f'<figure class="case-fig">{img(fn, cap)}'
+               f'<figcaption>{html.escape(cap)}</figcaption></figure>')
     meta = "".join(f'<div><b>{k}</b><span>{v}</span></div>'
                    for k, v in (("Dog", c["dog"]), ("Discipline", c["discipline"]), ("Outcome", c["outcome"])))
     return (f'<article class="case" id="{key}">'
             f'<div class="eyebrow">{c["kicker"]}</div><h3>{c["title"]}</h3>'
-            f'<figure class="case-fig">{img(fn, cap)}<figcaption>{html.escape(cap)}</figcaption></figure>'
+            f'{fig}'
             f'<div class="case-body">{paras}{flagged}</div>'
             f'<div class="case-take"><b>What it changed:</b> {c["takeaway"]}</div>'
             f'<div class="case-meta">{meta}</div></article>')
@@ -944,7 +1032,8 @@ def case_nodes(slug, canonical):
         return []
     out = []
     for key, c in CASE_STUDIES.items():
-        img_url = f'{SITE}/images/' + c["photo"][0].rsplit(".", 1)[0] + ".webp"
+        img_url = ((f'{SITE}/images/' + c["photo"][0].rsplit(".", 1)[0] + ".webp")
+                   if c.get("photo") else f'{SITE}/og.png')
         desc = c["body"][0][:200]
         out.append('{"@type":"CreativeWork","@id":"%s#%s","name":%s,"genre":"Case study",'
                    '"inLanguage":"en-US","description":%s,"isPartOf":{"@id":"%s#webpage"},'
@@ -1579,10 +1668,8 @@ proof_body = f"""
   <h2>What our teams did in the field.</h2>
   <p class="lead" style="max-width:64ch">Told in David's words, including the parts he cannot prove. Where an explanation is a hypothesis, it is labelled as one.</p>
   {case_study("tatsa-cleared-vehicle", flagged='<p class="muted" style="font-size:.86rem">' + fill('confirm we may state that another team had already worked and cleared the vehicle') + ' ' + fill('year, breed, and how long you and Tatsa worked together — and which dog in this photo is Tatsa, or a photo of her on her own') + '</p>')}
-  <div class="grid g2" style="margin-top:26px;max-width:820px;margin-left:auto;margin-right:auto">
-   <div class="card"><div class="ph">Case study 2<br>{fill('a search where the dog was right and the handler misread it')}</div></div>
-   <div class="card"><div class="ph">Case study 3<br>{fill('a case that ended up in testimony')}</div></div>
-  </div>
+  {case_study("lucy-and-the-baby-doll", flagged='<p class="muted" style="font-size:.86rem">' + fill('a photo of Lucy, and confirmation we may describe the squad firing on a box the dog had cleared') + '</p>')}
+  {case_study("boomer-and-contamination", flagged='<p class="muted" style="font-size:.86rem">' + fill('a photo of Boomer, and roughly what year this was') + '</p>')}
 </div></section>
 
 <section class="sec tight"><div class="wrap">
