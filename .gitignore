@@ -20,3 +20,8 @@ node_modules/
 # but never deletes the committed binaries (og.png, favicon.svg, logo.svg,
 # downloads/*.pdf), so those stay tracked.
 .env*
+
+# Client strategy documents — kept locally, not published to the repo.
+# See CLAUDE.md section 12. Re-track only if the repository is made private.
+RESEARCH-RESPONSE.md
+INTAKE-KIT-V2.md

@@ -15,7 +15,7 @@ BIZ = "Latimer School of Operational K9s"
 PHONE = "(205) 966-8739"
 PHONE_TEL = "+12059668739"
 ADDR = "530 Hackney Street, Lincoln, AL 35096"
-TAGLINE = "Proven in the Field. Not Just the Yard."
+TAGLINE = "Trained for the field, not just the yard."
 FORM_ACTION = "https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID"  # FILL-IN
 
 NAV = [
@@ -315,7 +315,7 @@ FOOTER = f"""<footer>
     <div class="footgrid">
       <div class="footbrand">
         <a class="brand" href="/index.html"><span class="mark"></span>K9<span>SCHOOL</span></a>
-        <p>{BIZ}. Operational detection dogs and certified handlers — proven in the field, not just the yard.</p>
+        <p>{BIZ}. Operational detection dogs and certified handlers — trained for the field, not just the yard.</p>
         <p><a href="tel:{PHONE_TEL}">{PHONE}</a><br>{ADDR}</p>
       </div>
       <div><h4>Programs</h4><ul>
@@ -1182,7 +1182,7 @@ home_body = f"""
     <div class="hero-grid">
      <div class="hero-copy">
       <div class="kick">Operational Detection K9s &middot; Since {fill('year')}</div>
-      <h1>Proven in the Field. <span class="amb">Not Just the Yard.</span></h1>
+      <h1>Trained for the field, <span class="amb">not just the yard.</span></h1>
       <p class="sub">Detection dogs and handlers built to hold up where it counts — reliable under pressure, defensible in court, ready for real deployment. Trusted by agencies and working teams nationwide.</p>
       <div class="btnrow">
         <a class="btn" href="/contact.html">Request a Capability Brief</a>
@@ -1748,7 +1748,7 @@ about_body = f"""
   <p>They did all of that without repeated commands to seek, without a handler pointing or bending over them, without constant direction. The dogs were focused on the odor of quail, and nothing else. David's father was teaching compound behavior and a trained final response long before those were terms anybody used.</p>
   <p>Two things came out of those years. The first is that David never had to be persuaded that a dog's nose was real. He had watched too many of them work all day, finding birds until they were exhausted. In his words: <i>not once do I recall walking up to a pointed bird dog and not finding quail where the dog pointed.</i> He is quick to add the necessary qualification — <b>false alerts are a fact of life in detection work</b>, and the honest response to that is to train to minimize them rather than to make excuses for them. But having seen what a dog is capable of when it is genuinely working odor, he was never going to accept less than that as normal.</p>
   <p>The second is the phrase itself. It came from watching his father start puppies in the yard. A young dog can look perfect in the yard and come apart the first time it is turned loose on a real hunt. It was not that they could not find birds — most of them could. The question was whether they could apply logic to a hunt, use wind scenting and tracking, solve the odor problem, and then point and hold until the hunter flushed the birds. All of those pieces had to arrive at once. You can control a dog in a backyard and make the performance look pretty. Out in the field, where the dog has to take over, is a different story.</p>
-  <p>That is where it comes from: <b>trained for the field, not just the yard.</b> {fill('the site currently carries this as "Proven in the Field. Not Just the Yard." — confirm which wording is canonical and we will align every page')}</p>
+  <p>That is where it comes from: <b>trained for the field, not just the yard.</b></p>
 </div></section>
 
 <section class="sec"><div class="wrap" style="max-width:820px">
