@@ -176,6 +176,23 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,13,.94);backdrop
 .vid-more{margin-top:20px;font-size:.86rem;font-weight:700}
 .wash .vid figcaption{color:var(--steel)}
 
+/* CASE STUDY (T9) */
+.case{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--gold);
+      border-radius:var(--r);padding:30px 34px 26px;box-shadow:var(--shadow);max-width:820px;margin:26px auto 0}
+.case h3{font-size:1.62rem;margin:6px 0 0;color:var(--ink2);letter-spacing:-.01em}
+.case-fig{margin:22px 0 4px}
+.case-fig figcaption{margin-top:8px;font-size:.82rem;color:var(--mute);font-weight:600;text-align:center}
+.case-body p{margin:14px 0 0}
+.case-take{margin-top:22px;padding:14px 18px;background:var(--wash);border-left:3px solid var(--gold);
+           border-radius:0 6px 6px 0;font-size:.95rem}
+.case-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;
+           margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.case-meta div{font-size:.82rem;line-height:1.5}
+.case-meta b{display:block;font-family:'IBM Plex Mono',Consolas,monospace;font-size:.7rem;
+             letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:3px}
+.case-meta span{color:var(--ink2);font-weight:600}
+@media(max-width:640px){.case{padding:24px 20px 20px}.case h3{font-size:1.35rem}}
+
 /* STICKY MOBILE CLICK-TO-CALL */
 .callbar{display:none}
 @media(max-width:760px){
@@ -419,6 +436,7 @@ def page(slug, title, desc, body, nodes=None, active=None, canonical=None, crumb
     graph += _citation_nodes(slug)
     graph += [n for n in (nodes or []) if n]
     graph += video_nodes(slug, canonical)
+    graph += case_nodes(slug, canonical)
     schema_block = ('<script type="application/ld+json">'
                     '{"@context":"https://schema.org","@graph":[' + ",".join(graph) + ']}</script>')
     # AEO Quick Answer (Keystone Block #1): inject after the hero, hooked for Speakable
@@ -863,6 +881,78 @@ def video_nodes(slug, canonical):
             '"publisher":{"@id":"%s/#localbusiness"},"isPartOf":{"@id":"%s#webpage"}}'
             % (canonical, vid, _json(title), _json(cap), date, _iso_dur(secs), thumb,
                vid, vid, SITE, canonical))
+    return out
+
+# ---------- CASE STUDIES (Keystone T9) ----------
+# The highest-trust asset on the site and the one most often missing. Told the way
+# David tells them: what happened, then what it changed. Hedges stay in - the value
+# of the Tatsa story is that he calls his own explanation a hypothesis rather than
+# a finding. Schema is honest CreativeWork: no ratings, no invented dates.
+CASE_STUDIES = {
+ "tatsa-cleared-vehicle": dict(
+   kicker="Case study — narcotics",
+   title="The find another dog had already cleared",
+   photo=("lsoc-12-me-tatsa-georgia-and-midnight.jpg", "David with Tatsa and the team"),
+   dog="Tatsa",
+   discipline="Narcotics detection",
+   outcome="Crack cocaine, packaged for distribution, behind the driver's seat",
+   body=[
+     "We were called out to work a vehicle for another agency. When we got there five or six "
+     "patrol cars were already on scene. Must be a big deal, I thought. The officer who made the "
+     "stop asked me to run Tatsa on the pickup and tell him what we found.",
+
+     "I took her to the grass for a break and we approached from the passenger side. She engaged "
+     "and started to work. Coming past the driver's door she stopped hard, changed direction back "
+     "toward it, sniffed for a minute, and sat with her nose pointed at the door. I signalled the "
+     "alert. The officer opened the door and reached in behind the seat almost immediately: a "
+     "plastic bottle of crack rocks, individually wrapped in foil, packaged for distribution.",
+
+     "Then I was told a K9 team had already worked that truck and cleared it. Had I known that "
+     "before I came, I probably would not have come.",
+
+     "That one stayed with me. I wanted to know why the other dog did not alert, and I have since "
+     "learned there are a lot of possible reasons. But one of the most common is handler influence "
+     "— and almost everyone discusses it in one direction only. Handlers are trained not to cue a "
+     "dog into a false alert. I think influence can just as easily cause a miss. If a dog has "
+     "become handler-dependent and is waiting on a cue it is used to getting, it can find the odor, "
+     "never get the cue, and never give the trained final response.",
+
+     "The handler that day was new, and this is a hypothesis on my part, not something I can prove "
+     "about that dog. But knowing what I know now it is a reasonable explanation, and it is a large "
+     "part of why I built training strategies to reduce handler influence. We have to guard against "
+     "influencing a dog into a false alert. We also have to guard against influencing one into a miss.",
+   ],
+   takeaway="A miss is harder to catch than a false alert. Nobody audits the vehicle you drove away from.",
+ ),
+}
+
+def case_study(key, flagged=""):
+    c = CASE_STUDIES[key]
+    paras = "".join(f"<p>{t}</p>" for t in c["body"])
+    fn, cap = c["photo"]
+    meta = "".join(f'<div><b>{k}</b><span>{v}</span></div>'
+                   for k, v in (("Dog", c["dog"]), ("Discipline", c["discipline"]), ("Outcome", c["outcome"])))
+    return (f'<article class="case" id="{key}">'
+            f'<div class="eyebrow">{c["kicker"]}</div><h3>{c["title"]}</h3>'
+            f'<figure class="case-fig">{img(fn, cap)}<figcaption>{html.escape(cap)}</figcaption></figure>'
+            f'<div class="case-body">{paras}{flagged}</div>'
+            f'<div class="case-take"><b>What it changed:</b> {c["takeaway"]}</div>'
+            f'<div class="case-meta">{meta}</div></article>')
+
+def case_nodes(slug, canonical):
+    if slug != "proof.html":
+        return []
+    out = []
+    for key, c in CASE_STUDIES.items():
+        img_url = f'{SITE}/images/' + c["photo"][0].rsplit(".", 1)[0] + ".webp"
+        desc = c["body"][0][:200]
+        out.append('{"@type":"CreativeWork","@id":"%s#%s","name":%s,"genre":"Case study",'
+                   '"inLanguage":"en-US","description":%s,"isPartOf":{"@id":"%s#webpage"},'
+                   '"creator":{"@id":"%s/#localbusiness"},"author":{"@id":"%s/about.html#david"},'
+                   '"about":{"@type":"Service","name":%s,"provider":{"@id":"%s/#localbusiness"}},'
+                   '"image":["%s"]}'
+                   % (canonical, key, _json(c["title"]), _json(desc), canonical, SITE, SITE,
+                      _json(c["discipline"]), SITE, img_url))
     return out
 
 def book_callout():
@@ -1487,10 +1577,11 @@ proof_body = f"""
 <section class="sec"><div class="wrap">
   <div class="eyebrow">Case studies</div>
   <h2>What our teams did in the field.</h2>
-  <div class="grid g3" style="margin-top:26px">
-   <div class="card"><div class="ph">Case study 1<br>{fill('Situation → what the team did → measurable outcome')}</div></div>
-   <div class="card"><div class="ph">Case study 2<br>{fill('Situation → action → outcome')}</div></div>
-   <div class="card"><div class="ph">Case study 3<br>{fill('Situation → action → outcome')}</div></div>
+  <p class="lead" style="max-width:64ch">Told in David's words, including the parts he cannot prove. Where an explanation is a hypothesis, it is labelled as one.</p>
+  {case_study("tatsa-cleared-vehicle", flagged='<p class="muted" style="font-size:.86rem">' + fill('confirm we may state that another team had already worked and cleared the vehicle') + ' ' + fill('year, breed, and how long you and Tatsa worked together — and which dog in this photo is Tatsa, or a photo of her on her own') + '</p>')}
+  <div class="grid g2" style="margin-top:26px;max-width:820px;margin-left:auto;margin-right:auto">
+   <div class="card"><div class="ph">Case study 2<br>{fill('a search where the dog was right and the handler misread it')}</div></div>
+   <div class="card"><div class="ph">Case study 3<br>{fill('a case that ended up in testimony')}</div></div>
   </div>
 </div></section>
 
@@ -2031,6 +2122,11 @@ article("resources-handler-influence-invisible-leash.html",
    ("What the research shows",
     ["The clearest demonstration is Lit, Schweitzer and Oberbauer (2011), published in <i>Animal Cognition</i>. Eighteen certified law-enforcement narcotics and explosives teams searched rooms that contained no target odor at all. Handlers were told scent might be present, and in some conditions that paper markers showed where. Across 164 searches the teams produced 225 incorrect alerts, and those alerts clustered at the locations the handlers believed held odor. The handlers' beliefs moved the results more than anything the dogs were reacting to.",
      "Be precise about what that proves, because overstating it is its own trap. It does not mean handlers cue dogs into false alerts every time, and later work has found the size of the effect depends heavily on how strongly the handler believes and how the test is run. Some of the effect is also the handler reading ambiguity as an alert because they expected one — influence running dog-to-handler rather than handler-to-dog. Both directions are the same problem for a court: the record shows an alert that odor did not cause. This isn't an attack on handlers. It's a description of how sensitive these teams are, and why the fix is structural rather than a matter of trying harder."]),
+   ("Influence does not only cause false alerts. It causes misses.",
+    ["Almost everyone discusses handler influence in one direction: the handler expects odor, the dog reads the expectation, and an alert appears where there is nothing. That is the failure the research documents and the one handlers are trained to avoid. It is only half the problem.",
+     "A dog can also be influenced into missing. If a dog has become dependent on its handler — used to a particular cue, a pause, a change of posture before it commits — then a handler who does not produce that cue can leave the dog holding information it never reports. The dog finds the odor and gives you nothing, because the thing it was really waiting on never arrived.",
+     "This matters more than it sounds, because of the asymmetry in how the two errors get caught. A false alert is visible: the search happens, nothing is found, everyone in the parking lot knows. A miss is invisible. The vehicle is cleared and driven away and nobody ever learns what was behind the seat. Programs audit the error they can see and stay blind to the one they cannot, which means the miss rate of a handler-dependent team can stay unmeasured for years.",
+     'David has written up a deployment that turned on exactly this — a vehicle another team had already worked, and what Tatsa did with it. <a href="/proof.html#tatsa-cleared-vehicle">Read the case study</a>.']),
    ("Four channels of influence",
     ["UL:<b>Physical</b> — leash tension, body position, slowing at a spot.|<b>Visual</b> — a glance, a lean, a change in posture.|<b>Verbal</b> — tone and timing of encouragement.|<b>Emotional</b> — the handler's own anticipation traveling down the leash."]),
    ("Why the dog isn't cheating",
